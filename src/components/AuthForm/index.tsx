@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import {
   CustomizedTextField,
   CustomizedTypography,
-  stylesPaper,
+  CustomizedPaper,
 } from "./styles";
 import {
   composeValidators,
@@ -42,7 +42,7 @@ const AuthForm = () => {
               {authError}
             </CustomizedTypography>
           )}
-          <Paper sx={stylesPaper}>
+          <CustomizedPaper>
             <Field<string>
               name="username"
               validate={composeValidators(
@@ -75,7 +75,7 @@ const AuthForm = () => {
             <Button variant="contained" type="submit">
               Войти
             </Button>
-          </Paper>
+          </CustomizedPaper>
         </form>
       )}
     />
