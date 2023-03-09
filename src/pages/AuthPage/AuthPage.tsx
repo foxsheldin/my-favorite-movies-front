@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import AuthForm from "../../components/AuthForm";
 import { CustomizedContainer } from "./styles";
-const logo = require("../../assets/image/movie-logo.webp");
+import logo from "../../assets/image/movie-logo.webp";
 
 const AuthPage = () => {
   useEffect(() => {
