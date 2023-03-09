@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { TextField, Typography } from "@mui/material";
+import { Paper, TextField, Typography } from "@mui/material";
 
 export const CustomizedTextField = styled(TextField)`
   width: 350px;
@@ -10,9 +10,9 @@ export const CustomizedTypography = styled(Typography)`
   text-align: center;
 `;
 
-export const stylesPaper = {
-  display: "flex",
-  flexDirection: "column",
-  padding: "20px",
-  rowGap: "15px",
-};
+export const CustomizedPaper = styled(Paper)`
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  row-gap: 15px;
+`;
