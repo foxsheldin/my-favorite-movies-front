@@ -2,13 +2,14 @@ import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AuthPage from "@pages/AuthPage/AuthPage";
 import PanelLayout from "@pages/PanelLayout";
+import FavoriteMoviePage from "@pages/FavoriteMoviePage";
 
 const router = createBrowserRouter([
   { path: "/", element: <AuthPage /> },
   {
     path: "/panel",
     element: <PanelLayout />,
-    children: [],
+    children: [{ index: true, element: <FavoriteMoviePage /> }],
   },
 ]);
 
