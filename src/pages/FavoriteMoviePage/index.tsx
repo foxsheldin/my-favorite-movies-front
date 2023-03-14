@@ -1,5 +1,7 @@
 import React from "react";
 import { Container, Typography } from "@mui/material";
+import FavoriteMovie from "@components/FavoriteMovie";
+import SelectGenre from "@components/SelectGenre";
 import { CustomizedContainer } from "./styles";
 
 const FavoriteMoviePage = () => {
@@ -10,6 +12,8 @@ const FavoriteMoviePage = () => {
           Избранное
         </Typography>
       </Container>
+      <SelectGenre />
+      <FavoriteMovie />
     </CustomizedContainer>
   );
 };
