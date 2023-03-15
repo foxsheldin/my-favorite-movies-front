@@ -1,21 +1,13 @@
 import React from "react";
 import MovieViewModuleItem from "@components/MovieViewModuleItem";
-import Message from "@components/Message";
-import { selectMovieIds } from "@store/movie/selectors";
-import { useAppSelector } from "@store/hooks";
 import { CustomizedDiv } from "./styles";
+import { IMovieViewModuleProps } from "./types";
 
-const MovieViewModule = () => {
-  const movieIds = useAppSelector(selectMovieIds);
-
-  if (!movieIds.length) {
-    return <Message text="Нет данных" />;
-  }
-
+const MovieViewModule = ({ data }: IMovieViewModuleProps) => {
   return (
     <CustomizedDiv>
-      {movieIds?.map((id) => (
-        <MovieViewModuleItem key={id} id={id} />
+      {data?.map((item) => (
+        <MovieViewModuleItem key={item?.id} data={item} />
       ))}
     </CustomizedDiv>
   );

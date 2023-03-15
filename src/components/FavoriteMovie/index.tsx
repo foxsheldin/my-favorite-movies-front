@@ -13,16 +13,23 @@ import MovieViewList from "@components/MovieViewList";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import Preloader from "@components/Preloader";
 import { fetchFavoriteMovies } from "@store/favoriteMovie/thunks";
-import { selectFavoriteMovieIsLoading } from "@store/favoriteMovie/selectors";
+import {
+  selectFavoriteMovieArrayEntities,
+  selectFavoriteMovieIsLoading,
+} from "@store/favoriteMovie/selectors";
 import { ETypeView } from "@constants/typeView";
 import MovieViewModule from "@components/MovieViewModule";
 import { selectSelectedGenresArray } from "@store/genre/selectors";
 import { CustomizedDiv } from "./styles";
+import Message from "@components/Message";
 
 const FavoriteMovie = () => {
   const dispatch = useAppDispatch();
+
   const selectedGenres = useAppSelector(selectSelectedGenresArray);
+  const favoriteMoviesData = useAppSelector(selectFavoriteMovieArrayEntities);
   const isFavoriteMovieLoading = useAppSelector(selectFavoriteMovieIsLoading);
+
   const [viewList, setViewList] = useState(ETypeView.list);
 
   useEffect(() => {
@@ -72,8 +79,13 @@ const FavoriteMovie = () => {
           </CustomizedDiv>
         </Container>
       </Paper>
-      {viewList === ETypeView.list && <MovieViewList />}
-      {viewList === ETypeView.module && <MovieViewModule />}
+      {!favoriteMoviesData.length && <Message text="Нет данных" />}
+      {viewList === ETypeView.list && (
+        <MovieViewList data={favoriteMoviesData} />
+      )}
+      {viewList === ETypeView.module && (
+        <MovieViewModule data={favoriteMoviesData} />
+      )}
     </>
   );
 };

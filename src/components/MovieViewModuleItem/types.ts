@@ -1,5 +1,6 @@
-import { EntityId } from "@reduxjs/toolkit";
+import { IFavoriteMovieData } from "@store/favoriteMovie/types";
+import { IMovieData } from "@store/movie/types";
 
 export interface IMovieViewModuleItemProps {
-  id: EntityId;
+  data?: IFavoriteMovieData | IMovieData;
 }

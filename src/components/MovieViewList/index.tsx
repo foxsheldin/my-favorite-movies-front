@@ -8,31 +8,24 @@ import {
   TableRow,
 } from "@mui/material";
 import MovieViewListItem from "@components/MovieViewListItem";
-import Message from "@components/Message";
-import { useAppSelector } from "@store/hooks";
-import { selectMovieIds } from "@store/movie/selectors";
+import { IMovieViewListProps } from "./types";
 
-const MovieViewList = () => {
-  const movieIds = useAppSelector(selectMovieIds);
-
-  if (!movieIds.length) {
-    return <Message text="Нет данных" />;
-  }
-
+const MovieViewList = ({ data }: IMovieViewListProps) => {
   return (
     <Paper>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell align="center">Название фильма</TableCell>
-            <TableCell align="center">Обложка</TableCell>
+            <TableCell align="center" colSpan={2}>
+              Название фильма
+            </TableCell>
             <TableCell align="center">Описание</TableCell>
             <TableCell align="center">Действия</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {movieIds?.map((id) => (
-            <MovieViewListItem key={id} id={id} />
+          {data?.map((item) => (
+            <MovieViewListItem key={item?.id} data={item} />
           ))}
         </TableBody>
       </Table>

@@ -6,32 +6,26 @@ import {
   CustomizedTypographyOverview,
   CustomizedTypographyTitle,
 } from "./styles";
-import { useAppSelector } from "@store/hooks";
-import { selectMovieByMovieId } from "@store/movie/selectors";
 import { IMovieViewModuleItemProps } from "./types";
 
-const MovieViewModuleItem = ({ id }: IMovieViewModuleItemProps) => {
-  const movie = useAppSelector((state) =>
-    selectMovieByMovieId(state, { movieId: id })
-  )[0];
-
+const MovieViewModuleItem = ({ data }: IMovieViewModuleItemProps) => {
   return (
     <CustomizedPaper>
       <CustomizedImage
         src={
           (process.env.REACT_APP_MOVIE_DB_IMAGE_URL_ORIGINAL as string) +
-          movie?.poster_path
+          data?.poster_path
         }
         loading="lazy"
       />
       <CustomizedTypographyTitle variant="subtitle2">
-        {movie?.title}
+        {data?.title}
       </CustomizedTypographyTitle>
       <CustomizedTypographyOverview
         variant="body2"
         sx={{ textOverflow: "clip" }}
       >
-        {movie?.overview}
+        {data?.overview}
       </CustomizedTypographyOverview>
       <MovieAction />
     </CustomizedPaper>
