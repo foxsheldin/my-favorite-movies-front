@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import { Button } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { selectGenreByGenreId } from "@store/genre/selectors";
-import { genreSlice } from "@store/genre";
+import { updateSelectedGenres } from "@store/genre/thunk";
 import { IGenreItemProps } from "./types";
 
 const GenreListItem = memo(({ id, selected }: IGenreItemProps) => {
@@ -14,9 +14,7 @@ const GenreListItem = memo(({ id, selected }: IGenreItemProps) => {
   return (
     <Button
       variant={selected ? "contained" : "outlined"}
-      onClick={() =>
-        dispatch(genreSlice.actions.updateSelectedGenres(id as number))
-      }
+      onClick={() => dispatch(updateSelectedGenres(id as number))}
     >
       {genre?.name}
     </Button>

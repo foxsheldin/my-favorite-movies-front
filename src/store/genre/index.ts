@@ -5,7 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 import { loadingStatuses } from "@constants/loadingStatuses";
 import { IGenreAdditionalInitialState, IGenreItemData } from "./types";
-import { fetchGenres } from "./thunk";
+import { fetchGenres, updateSelectedGenres } from "./thunk";
 
 const genreEntityAdapter = createEntityAdapter<IGenreItemData>();
 
@@ -17,6 +17,9 @@ export const genreSlice = createSlice({
       selectedGenres: [],
     }),
   reducers: {
+    setSelectedGenres(state, action) {
+      state.selectedGenres = action.payload;
+    },
     updateSelectedGenres(state, action: PayloadAction<number>): void {
       if (state.selectedGenres.includes(action.payload)) {
         state.selectedGenres = state.selectedGenres.filter(
@@ -37,6 +40,12 @@ export const genreSlice = createSlice({
         state.status = loadingStatuses.success;
       })
       .addCase(fetchGenres.rejected, (state, action) => {
+        state.status =
+          action.payload === loadingStatuses.earlyAdded
+            ? loadingStatuses.success
+            : loadingStatuses.failed;
+      })
+      .addCase(updateSelectedGenres.rejected, (state, action) => {
         state.status =
           action.payload === loadingStatuses.earlyAdded
             ? loadingStatuses.success
