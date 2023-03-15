@@ -1,3 +1,4 @@
+import { IFavoriteMovieResponseData } from "@store/favoriteMovie/types";
 import { IGenreResponseData } from "@store/genre/types";
 import { IMovieResponseData } from "@store/movie/types";
 import axios from "axios";
@@ -22,6 +23,17 @@ export const movieAPI = {
     });
   },
   getFavoriteMovieList() {
-    return instance.get;
+    return new Promise<IFavoriteMovieResponseData>((resolve, reject) => {
+      const tempObject: any = JSON.parse(
+        localStorage.getItem("DB_user_data") as string
+      );
+      const result = {
+        page: 1,
+        results: tempObject.favoriteMovies,
+        total_pages: 1,
+        total_results: tempObject.favoriteMovies.length,
+      };
+      resolve(result);
+    });
   },
 };

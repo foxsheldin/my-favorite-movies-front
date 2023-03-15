@@ -1,3 +1,4 @@
+import { loadingStatuses } from "@constants/loadingStatuses";
 import { EntityId } from "@reduxjs/toolkit";
 import { RootState } from "..";
 
@@ -24,3 +25,11 @@ export const selectIsSelectedGenreByGenreId = (
   state: RootState,
   { genreId }: { genreId: number }
 ) => selectSelectedGenresArray(state).includes(genreId);
+
+export const selectGenreLoadingStatus = (state: RootState) =>
+  selectGenreModuleState(state).status;
+
+export const selectGenreIsLoading = (state: RootState) =>
+  [loadingStatuses.idle, loadingStatuses.inProgress].includes(
+    selectGenreLoadingStatus(state)
+  );

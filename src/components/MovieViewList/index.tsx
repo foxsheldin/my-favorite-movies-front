@@ -8,11 +8,16 @@ import {
   TableRow,
 } from "@mui/material";
 import MovieViewListItem from "@components/MovieViewListItem";
+import Message from "@components/Message";
 import { useAppSelector } from "@store/hooks";
 import { selectMovieIds } from "@store/movie/selectors";
 
 const MovieViewList = () => {
   const movieIds = useAppSelector(selectMovieIds);
+
+  if (!movieIds.length) {
+    return <Message text="Нет данных" />;
+  }
 
   return (
     <Paper>

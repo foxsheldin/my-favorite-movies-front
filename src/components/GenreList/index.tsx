@@ -1,21 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
 import GenreListItem from "@components/GenreListItem";
 import {
   selectGenreIds,
   selectSelectedGenresArray,
 } from "@store/genre/selectors";
-import { fetchGenres } from "@store/genre/thunk";
-import { useAppDispatch, useAppSelector } from "@store/hooks";
+import { useAppSelector } from "@store/hooks";
 import { CustomizedDiv } from "./styles";
 
 const GenreList = () => {
-  const dispatch = useAppDispatch();
   const genreIds = useAppSelector(selectGenreIds);
   const selectedGenres = useAppSelector(selectSelectedGenresArray);
-
-  useEffect(() => {
-    dispatch(fetchGenres());
-  }, []);
 
   return (
     <CustomizedDiv>

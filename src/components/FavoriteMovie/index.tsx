@@ -11,7 +11,9 @@ import ViewListIcon from "@mui/icons-material/ViewList";
 import ViewModuleIcon from "@mui/icons-material/ViewModule";
 import MovieViewList from "@components/MovieViewList";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
-import { fetchMovies } from "@store/movie/thunk";
+import Preloader from "@components/Preloader";
+import { fetchFavoriteMovies } from "@store/favoriteMovie/thunks";
+import { selectFavoriteMovieIsLoading } from "@store/favoriteMovie/selectors";
 import { ETypeView } from "@constants/typeView";
 import MovieViewModule from "@components/MovieViewModule";
 import { selectSelectedGenresArray } from "@store/genre/selectors";
@@ -20,10 +22,11 @@ import { CustomizedDiv } from "./styles";
 const FavoriteMovie = () => {
   const dispatch = useAppDispatch();
   const selectedGenres = useAppSelector(selectSelectedGenresArray);
+  const isFavoriteMovieLoading = useAppSelector(selectFavoriteMovieIsLoading);
   const [viewList, setViewList] = useState(ETypeView.list);
 
   useEffect(() => {
-    dispatch(fetchMovies());
+    dispatch(fetchFavoriteMovies());
   }, [selectedGenres]);
 
   const onViewToggleChange = (
@@ -32,6 +35,10 @@ const FavoriteMovie = () => {
   ) => {
     setViewList(newView);
   };
+
+  if (isFavoriteMovieLoading) {
+    return <Preloader message="Загрузка избранных фильмов..." />;
+  }
 
   return (
     <>
