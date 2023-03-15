@@ -57,34 +57,39 @@ const FavoriteMovie = () => {
             </Typography>
             <div>
               <Button>Добавить</Button>
-              <ToggleButtonGroup
-                value={viewList}
-                exclusive
-                onChange={onViewToggleChange}
-              >
-                <ToggleButton
-                  value={ETypeView.list}
-                  aria-label={ETypeView.list}
+              {!!favoriteMoviesData.length && (
+                <ToggleButtonGroup
+                  value={viewList}
+                  exclusive
+                  onChange={onViewToggleChange}
                 >
-                  <ViewListIcon />
-                </ToggleButton>
-                <ToggleButton
-                  value={ETypeView.module}
-                  aria-label={ETypeView.module}
-                >
-                  <ViewModuleIcon />
-                </ToggleButton>
-              </ToggleButtonGroup>
+                  <ToggleButton
+                    value={ETypeView.list}
+                    aria-label={ETypeView.list}
+                  >
+                    <ViewListIcon />
+                  </ToggleButton>
+                  <ToggleButton
+                    value={ETypeView.module}
+                    aria-label={ETypeView.module}
+                  >
+                    <ViewModuleIcon />
+                  </ToggleButton>
+                </ToggleButtonGroup>
+              )}
             </div>
           </CustomizedDiv>
         </Container>
       </Paper>
-      {!favoriteMoviesData.length && <Message text="Нет данных" />}
-      {viewList === ETypeView.list && (
-        <MovieViewList data={favoriteMoviesData} />
-      )}
-      {viewList === ETypeView.module && (
-        <MovieViewModule data={favoriteMoviesData} />
+      {!favoriteMoviesData.length ? (
+        <Message text="Нет данных" />
+      ) : (
+        (viewList === ETypeView.list && (
+          <MovieViewList data={favoriteMoviesData} />
+        )) ||
+        (viewList === ETypeView.module && (
+          <MovieViewModule data={favoriteMoviesData} />
+        ))
       )}
     </>
   );
