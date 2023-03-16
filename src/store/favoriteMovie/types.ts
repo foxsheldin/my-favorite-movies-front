@@ -11,3 +11,7 @@ export interface IFavoriteMovieData extends IMovieData {
   user_watched: boolean;
   user_favorite: boolean;
 }
+
+export interface ISelectFavoriteMovieArgsWithMovieId {
+  movieId: number;
+}

@@ -1,6 +1,6 @@
 import { Field, Form } from "react-final-form";
 import React, { useState } from "react";
-import { Button, Paper } from "@mui/material";
+import { Button } from "@mui/material";
 import { IAuthFormData } from "./types";
 import { useNavigate } from "react-router-dom";
 import {

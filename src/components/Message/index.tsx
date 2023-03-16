@@ -4,7 +4,7 @@ import { IMessageProps } from "./types";
 
 const Message = ({ text }: IMessageProps) => {
   return (
-    <Typography variant="h5" component={"p"} align="center">
+    <Typography variant="h5" component="p" align="center">
       {text}
     </Typography>
   );

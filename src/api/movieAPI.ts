@@ -1,10 +1,11 @@
+import axios from "axios";
 import {
   IFavoriteMovieData,
   IFavoriteMovieResponseData,
 } from "@store/favoriteMovie/types";
 import { IGenreResponseData } from "@store/genre/types";
-import { IMovieData, IMovieResponseData } from "@store/movie/types";
-import axios from "axios";
+import { IMovieResponseData } from "@store/movie/types";
+import { IBackendData } from "./types";
 
 const instance = axios.create({
   baseURL: "https://api.themoviedb.org/3/",
@@ -20,7 +21,7 @@ export const movieAPI = {
   },
   getFavoriteGenre() {
     return new Promise<number[]>((resolve, reject) => {
-      const { favoriteGenres }: any = JSON.parse(
+      const { favoriteGenres }: IBackendData = JSON.parse(
         localStorage.getItem("DB_user_data") as string
       );
       resolve(favoriteGenres);
@@ -35,7 +36,7 @@ export const movieAPI = {
   },
   getFavoriteMovieList() {
     return new Promise<IFavoriteMovieResponseData>((resolve, reject) => {
-      const { favoriteMovies }: any = JSON.parse(
+      const { favoriteMovies }: IBackendData = JSON.parse(
         localStorage.getItem("DB_user_data") as string
       );
       const result = {
@@ -49,7 +50,7 @@ export const movieAPI = {
   },
   updateSelectedGenres(selectedGenres: number[]) {
     return new Promise<number[]>((resolve, reject) => {
-      const result: any = JSON.parse(
+      const result: IBackendData = JSON.parse(
         localStorage.getItem("DB_user_data") as string
       );
 
@@ -64,9 +65,9 @@ export const movieAPI = {
       resolve(selectedGenres);
     });
   },
-  createFavoriteMovie(movieData: IMovieData | IFavoriteMovieData) {
-    return new Promise<any>((resolve, reject) => {
-      const tempObject: any = JSON.parse(
+  createFavoriteMovie(movieData: IFavoriteMovieData) {
+    return new Promise<IFavoriteMovieData[]>((resolve, reject) => {
+      const tempObject: IBackendData = JSON.parse(
         localStorage.getItem("DB_user_data") as string
       );
 
@@ -84,12 +85,12 @@ export const movieAPI = {
     });
   },
   deleteFavoriteMovie(movieId: number) {
-    return new Promise<any>((resolve, reject) => {
-      const tempObject: any = JSON.parse(
+    return new Promise<IFavoriteMovieData[]>((resolve, reject) => {
+      const tempObject: IBackendData = JSON.parse(
         localStorage.getItem("DB_user_data") as string
       );
       const result = tempObject.favoriteMovies.filter(
-        (item: IMovieData) => item?.id !== movieId
+        (item: IFavoriteMovieData) => item?.id !== movieId
       );
 
       localStorage.setItem(
@@ -105,24 +106,28 @@ export const movieAPI = {
   },
   updateWatchedMovieStatus(movieId: number) {
     return new Promise<IFavoriteMovieData>((resolve, reject) => {
-      const tempObject: any = JSON.parse(
+      const tempObject: IBackendData = JSON.parse(
         localStorage.getItem("DB_user_data") as string
       );
 
-      const result = tempObject.favoriteMovies.filter(
-        (item: IMovieData) => item?.id === movieId
-      )[0];
-      result.user_watched = !result.user_watched;
-
-      localStorage.setItem(
-        "DB_user_data",
-        JSON.stringify({
-          favoriteMovies: [...tempObject.favoriteMovies, result],
-          favoriteGenres: [...tempObject.favoriteGenres],
-        })
+      const result = tempObject.favoriteMovies.find(
+        (item: IFavoriteMovieData) => item.id === movieId
       );
+      if (result) {
+        result.user_watched = !result?.user_watched;
 
-      resolve(result);
+        localStorage.setItem(
+          "DB_user_data",
+          JSON.stringify({
+            favoriteMovies: [...tempObject.favoriteMovies, result],
+            favoriteGenres: [...tempObject.favoriteGenres],
+          })
+        );
+
+        resolve(result);
+      } else {
+        reject("");
+      }
     });
   },
 };

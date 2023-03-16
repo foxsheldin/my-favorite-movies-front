@@ -1,19 +1,23 @@
 import React, { memo } from "react";
 import { Button } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
-import { selectGenreByGenreId } from "@store/genre/selectors";
+import {
+  selectGenreByGenreId,
+  selectSelectedGenresArray,
+} from "@store/genre/selectors";
 import { updateSelectedGenres } from "@store/genre/thunk";
 import { IGenreItemProps } from "./types";
 
-const GenreListItem = memo(({ id, selected }: IGenreItemProps) => {
+const GenreListItem = memo(({ id }: IGenreItemProps) => {
   const dispatch = useAppDispatch();
   const genre = useAppSelector((state) =>
     selectGenreByGenreId(state, { genreId: id })
-  )[0];
+  );
+  const selectedGenres = useAppSelector(selectSelectedGenresArray);
 
   return (
     <Button
-      variant={selected ? "contained" : "outlined"}
+      variant={selectedGenres.includes(id as number) ? "contained" : "outlined"}
       onClick={() => dispatch(updateSelectedGenres(id as number))}
     >
       {genre?.name}

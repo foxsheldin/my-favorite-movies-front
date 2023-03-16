@@ -3,11 +3,11 @@ import MovieViewModuleItem from "@components/MovieViewModuleItem";
 import { CustomizedDiv } from "./styles";
 import { IMovieViewModuleProps } from "./types";
 
-const MovieViewModule = ({ data }: IMovieViewModuleProps) => {
+const MovieViewModule = ({ movies }: IMovieViewModuleProps) => {
   return (
     <CustomizedDiv>
-      {data?.map((item) => (
-        <MovieViewModuleItem key={item?.id} data={item} />
+      {movies?.map((movie) => (
+        <MovieViewModuleItem key={movie?.id} movie={movie} />
       ))}
     </CustomizedDiv>
   );

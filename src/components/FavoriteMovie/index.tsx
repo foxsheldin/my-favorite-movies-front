@@ -85,10 +85,10 @@ const FavoriteMovie = () => {
         <Message text="Нет данных" />
       ) : (
         (viewList === ETypeView.list && (
-          <MovieViewList data={favoriteMoviesData} />
+          <MovieViewList movies={favoriteMoviesData} />
         )) ||
         (viewList === ETypeView.module && (
-          <MovieViewModule data={favoriteMoviesData} />
+          <MovieViewModule movies={favoriteMoviesData} />
         ))
       )}
     </>

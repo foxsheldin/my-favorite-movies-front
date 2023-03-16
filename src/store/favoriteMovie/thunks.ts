@@ -1,7 +1,6 @@
 import { loadingStatuses } from "@constants/loadingStatuses";
 import { movieAPI } from "@api/movieAPI";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { IMovieData } from "@store/movie/types";
 import { favoriteMovieSlice } from ".";
 import { RootState } from "..";
 import { selectFavoriteMovieIsIncludesId } from "./selectors";
@@ -17,16 +16,16 @@ export const fetchFavoriteMovies = createAsyncThunk(
 
 export const updateFavoriteMovie = createAsyncThunk(
   "favoriteMovie/updateFavoriteMovie",
-  async (movieData: IFavoriteMovieData | undefined, thunkAPI) => {
+  async (movieData: IFavoriteMovieData, thunkAPI) => {
     let response: IFavoriteMovieData[];
     if (
       selectFavoriteMovieIsIncludesId(thunkAPI.getState() as RootState, {
-        movieId: movieData?.id as number,
+        movieId: movieData?.id,
       })
     ) {
-      response = await movieAPI.deleteFavoriteMovie(movieData?.id as number);
+      response = await movieAPI.deleteFavoriteMovie(movieData?.id);
     } else {
-      response = await movieAPI.createFavoriteMovie(movieData as IMovieData);
+      response = await movieAPI.createFavoriteMovie(movieData);
     }
 
     return response;
@@ -35,7 +34,7 @@ export const updateFavoriteMovie = createAsyncThunk(
 
 export const updateWatchedFavoriteMovie = createAsyncThunk(
   "favoriteMovie/updateWatchedFavoriteMovie",
-  async (movieData: IFavoriteMovieData | undefined, thunkAPI) => {
+  async (movieData: IFavoriteMovieData, thunkAPI) => {
     try {
       thunkAPI.dispatch(
         favoriteMovieSlice.actions.updateFavoriteMovie({

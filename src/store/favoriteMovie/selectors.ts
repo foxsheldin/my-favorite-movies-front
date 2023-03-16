@@ -1,5 +1,6 @@
 import { loadingStatuses } from "@constants/loadingStatuses";
 import { RootState } from "..";
+import { ISelectFavoriteMovieArgsWithMovieId } from "./types";
 
 export const selectFavoriteMovieModuleState = (state: RootState) =>
   state.favoriteMovie;
@@ -9,7 +10,7 @@ export const selectFavoriteMovieIds = (state: RootState) =>
 
 export const selectFavoriteMovieIsIncludesId = (
   state: RootState,
-  { movieId }: { movieId: number }
+  { movieId }: ISelectFavoriteMovieArgsWithMovieId
 ) => selectFavoriteMovieIds(state).includes(movieId);
 
 export const selectFavoriteMovieEntities = (state: RootState) =>
@@ -20,12 +21,12 @@ export const selectFavoriteMovieArrayEntities = (state: RootState) =>
 
 export const selectFavoriteMovieById = (
   state: RootState,
-  { movieId }: { movieId: number }
+  { movieId }: ISelectFavoriteMovieArgsWithMovieId
 ) => selectFavoriteMovieEntities(state)[movieId];
 
 export const selectFavoriteMovieByIdIsWatched = (
   state: RootState,
-  { movieId }: { movieId: number }
+  { movieId }: ISelectFavoriteMovieArgsWithMovieId
 ) => selectFavoriteMovieById(state, { movieId })?.user_watched;
 
 export const selectFavoriteMovieLoadingStatus = (state: RootState) =>

@@ -16,7 +16,7 @@ export const selectGenreArrayEntities = (state: RootState) =>
 export const selectGenreByGenreId = (
   state: RootState,
   { genreId }: { genreId: EntityId }
-) => selectGenreArrayEntities(state).filter((genre) => genre?.id === genreId);
+) => selectGenreArrayEntities(state).find((genre) => genre?.id === genreId);
 
 export const selectSelectedGenresArray = (state: RootState): number[] =>
   selectGenreModuleState(state).selectedGenres;

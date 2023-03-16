@@ -21,6 +21,7 @@
       "@components/*": ["components/*", "components"],
       "@constants/*": ["constants/*"],
       "@images/*": ["assets/image/*", "assets/image"],
+      "@helpers/*": ["helpers/*"],
       "@pages/*": ["pages/*"],
       "@store/*": ["store/*"]
     }

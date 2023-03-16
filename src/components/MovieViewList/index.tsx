@@ -10,7 +10,7 @@ import {
 import MovieViewListItem from "@components/MovieViewListItem";
 import { IMovieViewListProps } from "./types";
 
-const MovieViewList = ({ data }: IMovieViewListProps) => {
+const MovieViewList = ({ movies }: IMovieViewListProps) => {
   return (
     <Paper>
       <Table>
@@ -24,8 +24,8 @@ const MovieViewList = ({ data }: IMovieViewListProps) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data?.map((item) => (
-            <MovieViewListItem key={item?.id} data={item} />
+          {movies?.map((movie) => (
+            <MovieViewListItem key={movie?.id} movie={movie} />
           ))}
         </TableBody>
       </Table>

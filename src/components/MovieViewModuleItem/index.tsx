@@ -12,35 +12,37 @@ import {
   CustomizedTypographyTitle,
 } from "./styles";
 import { IMovieViewModuleItemProps } from "./types";
+import { IFavoriteMovieData } from "@store/favoriteMovie/types";
+import { getPathImageOriginal } from "@helpers/getPathImage";
 
-const MovieViewModuleItem = ({ data }: IMovieViewModuleItemProps) => {
+const MovieViewModuleItem = ({ movie }: IMovieViewModuleItemProps) => {
   const dispatch = useAppDispatch();
 
   return (
     <CustomizedPaper>
       <CustomizedImage
-        src={
-          (process.env.REACT_APP_MOVIE_DB_IMAGE_URL_ORIGINAL as string) +
-          data?.poster_path
-        }
+        src={`${getPathImageOriginal(movie?.poster_path as string)}`}
         loading="lazy"
+        alt={`Постер фильма ${movie?.title}`}
       />
       <CustomizedTypographyTitle variant="subtitle2">
-        {data?.title}
+        {movie?.title}
       </CustomizedTypographyTitle>
       <CustomizedTypographyOverview
         variant="body2"
         sx={{ textOverflow: "clip" }}
       >
-        {data?.overview}
+        {movie?.overview}
       </CustomizedTypographyOverview>
       <MovieAction
-        isFavorite={data?.user_favorite}
-        isWatched={data?.user_watched}
-        onFavoriteButtonClick={() => dispatch(updateFavoriteMovie(data))}
+        isFavorite={movie?.user_favorite}
+        isWatched={movie?.user_watched}
+        onFavoriteButtonClick={() =>
+          dispatch(updateFavoriteMovie(movie as IFavoriteMovieData))
+        }
         onWatchButtonClick={
-          data?.user_favorite
-            ? () => dispatch(updateWatchedFavoriteMovie(data))
+          movie?.user_favorite
+            ? () => dispatch(updateWatchedFavoriteMovie(movie))
             : undefined
         }
       />
