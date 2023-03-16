@@ -1,6 +1,9 @@
-import { IFavoriteMovieResponseData } from "@store/favoriteMovie/types";
+import {
+  IFavoriteMovieData,
+  IFavoriteMovieResponseData,
+} from "@store/favoriteMovie/types";
 import { IGenreResponseData } from "@store/genre/types";
-import { IMovieResponseData } from "@store/movie/types";
+import { IMovieData, IMovieResponseData } from "@store/movie/types";
 import axios from "axios";
 
 const instance = axios.create({
@@ -59,6 +62,67 @@ export const movieAPI = {
       );
 
       resolve(selectedGenres);
+    });
+  },
+  createFavoriteMovie(movieData: IMovieData | IFavoriteMovieData) {
+    return new Promise<any>((resolve, reject) => {
+      const tempObject: any = JSON.parse(
+        localStorage.getItem("DB_user_data") as string
+      );
+
+      const result = [...tempObject.favoriteMovies, movieData];
+
+      localStorage.setItem(
+        "DB_user_data",
+        JSON.stringify({
+          favoriteMovies: result,
+          favoriteGenres: [...tempObject.favoriteGenres],
+        })
+      );
+
+      resolve(result);
+    });
+  },
+  deleteFavoriteMovie(movieId: number) {
+    return new Promise<any>((resolve, reject) => {
+      const tempObject: any = JSON.parse(
+        localStorage.getItem("DB_user_data") as string
+      );
+      const result = tempObject.favoriteMovies.filter(
+        (item: IMovieData) => item?.id !== movieId
+      );
+
+      localStorage.setItem(
+        "DB_user_data",
+        JSON.stringify({
+          favoriteMovies: result,
+          favoriteGenres: [...tempObject.favoriteGenres],
+        })
+      );
+
+      resolve(result);
+    });
+  },
+  updateWatchedMovieStatus(movieId: number) {
+    return new Promise<IFavoriteMovieData>((resolve, reject) => {
+      const tempObject: any = JSON.parse(
+        localStorage.getItem("DB_user_data") as string
+      );
+
+      const result = tempObject.favoriteMovies.filter(
+        (item: IMovieData) => item?.id === movieId
+      )[0];
+      result.user_watched = !result.user_watched;
+
+      localStorage.setItem(
+        "DB_user_data",
+        JSON.stringify({
+          favoriteMovies: [...tempObject.favoriteMovies, result],
+          favoriteGenres: [...tempObject.favoriteGenres],
+        })
+      );
+
+      resolve(result);
     });
   },
 };

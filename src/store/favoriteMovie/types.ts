@@ -8,5 +8,6 @@ export interface IFavoriteMovieResponseData {
 }
 
 export interface IFavoriteMovieData extends IMovieData {
-  watched: boolean;
+  user_watched: boolean;
+  user_favorite: boolean;
 }

@@ -17,6 +17,8 @@ export const backend_data = {
       video: false,
       vote_average: 8,
       vote_count: 21233,
+      user_watched: true,
+      user_favorite: true,
     },
   ],
   favoriteGenres: [

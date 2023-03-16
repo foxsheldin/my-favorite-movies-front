@@ -1,5 +1,10 @@
 import React from "react";
 import MovieAction from "@components/MovieAction";
+import { useAppDispatch } from "@store/hooks";
+import {
+  updateFavoriteMovie,
+  updateWatchedFavoriteMovie,
+} from "@store/favoriteMovie/thunks";
 import {
   CustomizedImage,
   CustomizedPaper,
@@ -9,6 +14,8 @@ import {
 import { IMovieViewModuleItemProps } from "./types";
 
 const MovieViewModuleItem = ({ data }: IMovieViewModuleItemProps) => {
+  const dispatch = useAppDispatch();
+
   return (
     <CustomizedPaper>
       <CustomizedImage
@@ -27,7 +34,16 @@ const MovieViewModuleItem = ({ data }: IMovieViewModuleItemProps) => {
       >
         {data?.overview}
       </CustomizedTypographyOverview>
-      <MovieAction />
+      <MovieAction
+        isFavorite={data?.user_favorite}
+        isWatched={data?.user_watched}
+        onFavoriteButtonClick={() => dispatch(updateFavoriteMovie(data))}
+        onWatchButtonClick={
+          data?.user_favorite
+            ? () => dispatch(updateWatchedFavoriteMovie(data))
+            : undefined
+        }
+      />
     </CustomizedPaper>
   );
 };

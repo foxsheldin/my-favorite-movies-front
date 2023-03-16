@@ -1,9 +1,16 @@
 import React from "react";
 import { TableCell, TableRow, Typography } from "@mui/material";
 import MovieAction from "@components/MovieAction";
+import { useAppDispatch } from "@store/hooks";
+import {
+  updateFavoriteMovie,
+  updateWatchedFavoriteMovie,
+} from "@store/favoriteMovie/thunks";
 import { IMovieViewListItemProps } from "./types";
 
 const MovieViewListItem = ({ data }: IMovieViewListItemProps) => {
+  const dispatch = useAppDispatch();
+
   return (
     <TableRow>
       <TableCell>
@@ -22,7 +29,16 @@ const MovieViewListItem = ({ data }: IMovieViewListItemProps) => {
       </TableCell>
       <TableCell>{data?.overview}</TableCell>
       <TableCell align="right">
-        <MovieAction />
+        <MovieAction
+          isFavorite={data?.user_favorite}
+          isWatched={data?.user_watched}
+          onFavoriteButtonClick={() => dispatch(updateFavoriteMovie(data))}
+          onWatchButtonClick={
+            data?.user_favorite
+              ? () => dispatch(updateWatchedFavoriteMovie(data))
+              : undefined
+          }
+        />
       </TableCell>
     </TableRow>
   );
