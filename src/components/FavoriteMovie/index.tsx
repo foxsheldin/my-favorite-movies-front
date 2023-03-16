@@ -1,15 +1,5 @@
-import React, { MouseEvent, useEffect, useState } from "react";
-import {
-  Button,
-  Container,
-  Paper,
-  ToggleButton,
-  ToggleButtonGroup,
-  Typography,
-} from "@mui/material";
-import ViewListIcon from "@mui/icons-material/ViewList";
-import ViewModuleIcon from "@mui/icons-material/ViewModule";
-import MovieViewList from "@components/MovieViewList";
+import React, { useEffect } from "react";
+import { Button, Container, Paper, Typography } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import Preloader from "@components/Preloader";
 import { fetchFavoriteMovies } from "@store/favoriteMovie/thunks";
@@ -17,11 +7,10 @@ import {
   selectFavoriteMovieArrayEntities,
   selectFavoriteMovieIsLoading,
 } from "@store/favoriteMovie/selectors";
-import { ETypeView } from "@constants/typeView";
-import MovieViewModule from "@components/MovieViewModule";
 import { selectSelectedGenresArray } from "@store/genre/selectors";
 import { CustomizedDiv } from "./styles";
-import Message from "@components/Message";
+import MovieView from "@components/MovieView";
+import MovieViewFilter from "@components/MovieViewFilter";
 
 const FavoriteMovie = () => {
   const dispatch = useAppDispatch();
@@ -30,18 +19,9 @@ const FavoriteMovie = () => {
   const favoriteMoviesData = useAppSelector(selectFavoriteMovieArrayEntities);
   const isFavoriteMovieLoading = useAppSelector(selectFavoriteMovieIsLoading);
 
-  const [viewList, setViewList] = useState(ETypeView.list);
-
   useEffect(() => {
     dispatch(fetchFavoriteMovies());
   }, [selectedGenres]);
-
-  const onViewToggleChange = (
-    event: MouseEvent<HTMLElement>,
-    newView: ETypeView
-  ) => {
-    setViewList(newView);
-  };
 
   if (isFavoriteMovieLoading) {
     return <Preloader message="Загрузка избранных фильмов..." />;
@@ -57,40 +37,12 @@ const FavoriteMovie = () => {
             </Typography>
             <div>
               <Button>Добавить</Button>
-              {!!favoriteMoviesData.length && (
-                <ToggleButtonGroup
-                  value={viewList}
-                  exclusive
-                  onChange={onViewToggleChange}
-                >
-                  <ToggleButton
-                    value={ETypeView.list}
-                    aria-label={ETypeView.list}
-                  >
-                    <ViewListIcon />
-                  </ToggleButton>
-                  <ToggleButton
-                    value={ETypeView.module}
-                    aria-label={ETypeView.module}
-                  >
-                    <ViewModuleIcon />
-                  </ToggleButton>
-                </ToggleButtonGroup>
-              )}
+              {!!favoriteMoviesData.length && <MovieViewFilter />}
             </div>
           </CustomizedDiv>
         </Container>
       </Paper>
-      {!favoriteMoviesData.length ? (
-        <Message text="Нет данных" />
-      ) : (
-        (viewList === ETypeView.list && (
-          <MovieViewList movies={favoriteMoviesData} />
-        )) ||
-        (viewList === ETypeView.module && (
-          <MovieViewModule movies={favoriteMoviesData} />
-        ))
-      )}
+      <MovieView movies={favoriteMoviesData} />
     </>
   );
 };

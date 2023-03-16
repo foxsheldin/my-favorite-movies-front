@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { favoriteMovieSlice } from "./favoriteMovie";
+import { filterSlice } from "./filter";
 import { genreSlice } from "./genre/index";
 import { movieSlice } from "./movie";
 
@@ -8,6 +9,7 @@ const store = configureStore({
     genre: genreSlice.reducer,
     movie: movieSlice.reducer,
     favoriteMovie: favoriteMovieSlice.reducer,
+    filter: filterSlice.reducer,
   },
 });
 
