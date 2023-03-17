@@ -2,7 +2,7 @@ import React from "react";
 import { TableCell, TableRow, Typography } from "@mui/material";
 import MovieAction from "@components/MovieAction";
 import { IMovieViewListItemProps } from "./types";
-import { getPathImageW500 } from "@helpers/getPathImage";
+import { getImagePath } from "@helpers/getPathImage";
 
 const MovieViewListItem = ({ movie }: IMovieViewListItemProps) => {
   return (
@@ -12,7 +12,7 @@ const MovieViewListItem = ({ movie }: IMovieViewListItemProps) => {
       </TableCell>
       <TableCell align="center">
         <img
-          src={`${getPathImageW500(movie?.posterPath)}`}
+          src={`${getImagePath("w500", movie?.posterPath)}`}
           width="75"
           height="113"
           loading="lazy"

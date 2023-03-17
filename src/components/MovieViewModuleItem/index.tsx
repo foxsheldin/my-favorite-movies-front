@@ -7,13 +7,13 @@ import {
   CustomizedTypographyTitle,
 } from "./styles";
 import { IMovieViewModuleItemProps } from "./types";
-import { getPathImageOriginal } from "@helpers/getPathImage";
+import { getImagePath } from "@helpers/getPathImage";
 
 const MovieViewModuleItem = ({ movie }: IMovieViewModuleItemProps) => {
   return (
     <CustomizedPaper>
       <CustomizedImage
-        src={`${getPathImageOriginal(movie?.posterPath)}`}
+        src={`${getImagePath("original", movie?.posterPath)}`}
         loading="lazy"
         alt={`Постер фильма ${movie?.title}`}
       />
