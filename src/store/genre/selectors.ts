@@ -5,7 +5,7 @@ import { RootState } from "..";
 export const selectGenreModuleState = (state: RootState) => state.genre;
 
 export const selectGenreIds = (state: RootState) =>
-  selectGenreModuleState(state).ids;
+  selectGenreModuleState(state).ids as number[];
 
 export const selectGenreEntities = (state: RootState) =>
   selectGenreModuleState(state).entities;

@@ -5,7 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 import { loadingStatuses } from "@constants/loadingStatuses";
 import { IGenreAdditionalInitialState, IGenreItemData } from "./types";
-import { fetchGenres, updateSelectedGenres } from "./thunk";
+import { fetchGenres, updateSelectedGenres } from "./thunks";
 
 const genreEntityAdapter = createEntityAdapter<IGenreItemData>();
 

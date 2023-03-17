@@ -42,9 +42,7 @@ export const updateWatchedFavoriteMovie = createAsyncThunk(
           userWatched: !movieData?.userWatched,
         })
       );
-      const response = await movieAPI.updateWatchedMovieStatus(
-        movieData?.id as number
-      );
+      const response = await movieAPI.updateWatchedMovieStatus(movieData.id);
 
       return response;
     } catch (error) {

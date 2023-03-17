@@ -1,7 +1,7 @@
 import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
 import { loadingStatuses } from "@constants/loadingStatuses";
 import { IMovieData } from "./types";
-import { fetchMovies } from "./thunk";
+import { fetchMovies } from "./thunks";
 
 const movieEntityAdapter = createEntityAdapter<IMovieData>();
 

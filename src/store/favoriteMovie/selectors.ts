@@ -1,6 +1,9 @@
 import { loadingStatuses } from "@constants/loadingStatuses";
 import { RootState } from "..";
-import { ISelectFavoriteMovieArgsWithMovieId } from "./types";
+import {
+  IFavoriteMovieData,
+  ISelectFavoriteMovieArgsWithMovieId,
+} from "./types";
 
 export const selectFavoriteMovieModuleState = (state: RootState) =>
   state.favoriteMovie;
@@ -17,7 +20,7 @@ export const selectFavoriteMovieEntities = (state: RootState) =>
   selectFavoriteMovieModuleState(state).entities;
 
 export const selectFavoriteMovieArrayEntities = (state: RootState) =>
-  Object.values(selectFavoriteMovieEntities(state));
+  Object.values(selectFavoriteMovieEntities(state)) as IFavoriteMovieData[];
 
 export const selectFavoriteMovieById = (
   state: RootState,

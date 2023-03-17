@@ -4,7 +4,7 @@ import GenreList from "@components/GenreList";
 import Preloader from "@components/Preloader";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { selectGenreIsLoading } from "@store/genre/selectors";
-import { fetchGenres } from "@store/genre/thunk";
+import { fetchGenres } from "@store/genre/thunks";
 import { CustomizedContainer } from "./styles";
 
 const SelectGenre = () => {

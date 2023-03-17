@@ -5,7 +5,7 @@ import {
   selectGenreByGenreId,
   selectSelectedGenresArray,
 } from "@store/genre/selectors";
-import { updateSelectedGenres } from "@store/genre/thunk";
+import { updateSelectedGenres } from "@store/genre/thunks";
 import { IGenreItemProps } from "./types";
 
 const GenreListItem = memo(({ id }: IGenreItemProps) => {
@@ -17,8 +17,8 @@ const GenreListItem = memo(({ id }: IGenreItemProps) => {
 
   return (
     <Button
-      variant={selectedGenres.includes(id as number) ? "contained" : "outlined"}
-      onClick={() => dispatch(updateSelectedGenres(id as number))}
+      variant={selectedGenres.includes(id) ? "contained" : "outlined"}
+      onClick={() => dispatch(updateSelectedGenres(id))}
     >
       {genre?.name}
     </Button>

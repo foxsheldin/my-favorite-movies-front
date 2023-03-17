@@ -1,10 +1,5 @@
 import React from "react";
 import MovieAction from "@components/MovieAction";
-import { useAppDispatch } from "@store/hooks";
-import {
-  updateFavoriteMovie,
-  updateWatchedFavoriteMovie,
-} from "@store/favoriteMovie/thunks";
 import {
   CustomizedImage,
   CustomizedPaper,
@@ -12,16 +7,13 @@ import {
   CustomizedTypographyTitle,
 } from "./styles";
 import { IMovieViewModuleItemProps } from "./types";
-import { IFavoriteMovieData } from "@store/favoriteMovie/types";
 import { getPathImageOriginal } from "@helpers/getPathImage";
 
 const MovieViewModuleItem = ({ movie }: IMovieViewModuleItemProps) => {
-  const dispatch = useAppDispatch();
-
   return (
     <CustomizedPaper>
       <CustomizedImage
-        src={`${getPathImageOriginal(movie?.posterPath as string)}`}
+        src={`${getPathImageOriginal(movie?.posterPath)}`}
         loading="lazy"
         alt={`Постер фильма ${movie?.title}`}
       />
@@ -34,18 +26,7 @@ const MovieViewModuleItem = ({ movie }: IMovieViewModuleItemProps) => {
       >
         {movie?.overview}
       </CustomizedTypographyOverview>
-      <MovieAction
-        isFavorite={movie?.userFavorite}
-        isWatched={movie?.userWatched}
-        onFavoriteButtonClick={() =>
-          dispatch(updateFavoriteMovie(movie as IFavoriteMovieData))
-        }
-        onWatchButtonClick={
-          movie?.userFavorite
-            ? () => dispatch(updateWatchedFavoriteMovie(movie))
-            : undefined
-        }
-      />
+      <MovieAction movie={movie} />
     </CustomizedPaper>
   );
 };

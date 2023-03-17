@@ -4,34 +4,38 @@ import ClearIcon from "@mui/icons-material/Clear";
 import StarIcon from "@mui/icons-material/Star";
 import { IconButton, Tooltip } from "@mui/material";
 import { IMovieActionProps } from "./types";
+import { useAppDispatch } from "@store/hooks";
+import {
+  updateFavoriteMovie,
+  updateWatchedFavoriteMovie,
+} from "@store/favoriteMovie/thunks";
 
-const MovieAction = ({
-  isFavorite,
-  isWatched,
-  onFavoriteButtonClick,
-  onWatchButtonClick,
-}: IMovieActionProps) => {
+const MovieAction = ({ movie }: IMovieActionProps) => {
+  const dispatch = useAppDispatch();
+
   return (
     <div>
-      {onWatchButtonClick && (
-        <Tooltip title="Просмотрено">
-          <IconButton
-            color={isWatched ? "primary" : "default"}
-            onClick={onWatchButtonClick}
-          >
-            <VisibilityIcon />
-          </IconButton>
-        </Tooltip>
-      )}
-      {onFavoriteButtonClick && (
-        <Tooltip
-          title={isFavorite ? "Удалить из избранного" : "Добавить в избранное"}
+      <Tooltip title="Просмотрено">
+        <IconButton
+          color={movie.userWatched ? "primary" : "default"}
+          onClick={
+            movie?.userFavorite
+              ? () => dispatch(updateWatchedFavoriteMovie(movie))
+              : undefined
+          }
         >
-          <IconButton onClick={onFavoriteButtonClick}>
-            {isFavorite ? <ClearIcon /> : <StarIcon color="primary" />}
-          </IconButton>
-        </Tooltip>
-      )}
+          <VisibilityIcon />
+        </IconButton>
+      </Tooltip>
+      <Tooltip
+        title={
+          movie.userFavorite ? "Удалить из избранного" : "Добавить в избранное"
+        }
+      >
+        <IconButton onClick={() => dispatch(updateFavoriteMovie(movie))}>
+          {movie.userFavorite ? <ClearIcon /> : <StarIcon color="primary" />}
+        </IconButton>
+      </Tooltip>
     </div>
   );
 };

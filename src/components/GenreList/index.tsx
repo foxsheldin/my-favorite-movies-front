@@ -1,9 +1,6 @@
 import React from "react";
 import GenreListItem from "@components/GenreListItem";
-import {
-  selectGenreIds,
-  selectSelectedGenresArray,
-} from "@store/genre/selectors";
+import { selectGenreIds } from "@store/genre/selectors";
 import { useAppSelector } from "@store/hooks";
 import { CustomizedDiv } from "./styles";
 

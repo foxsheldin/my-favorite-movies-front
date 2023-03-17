@@ -1,6 +1,5 @@
+import { IFavoriteMovieData } from "@store/favoriteMovie/types";
+
 export interface IMovieActionProps {
-  isWatched?: boolean;
-  isFavorite?: boolean;
-  onFavoriteButtonClick?: () => void;
-  onWatchButtonClick?: () => void;
+  movie: IFavoriteMovieData;
 }
