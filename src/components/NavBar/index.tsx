@@ -7,6 +7,7 @@ const NavBar = () => {
   const navigate = useNavigate();
 
   const onLogoutClick = () => {
+    localStorage.removeItem("DB_auth_user");
     navigate("/");
   };
 
@@ -17,7 +18,9 @@ const NavBar = () => {
           My Favorite Movies
         </Typography>
         <CustomizedDiv>
-          <Typography>Hello, {localStorage.getItem("DB_user")}!</Typography>
+          <Typography>
+            Hello, {localStorage.getItem("DB_auth_user")}!
+          </Typography>
           <Button onClick={onLogoutClick}>Log out</Button>
         </CustomizedDiv>
       </CustomizedContainer>

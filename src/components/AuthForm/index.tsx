@@ -1,5 +1,5 @@
 import { Field, Form } from "react-final-form";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { IAuthFormData } from "./types";
 import { useNavigate } from "react-router-dom";
@@ -20,12 +20,19 @@ const AuthForm = () => {
   const [authError, setAuthError] = useState<string | null>(null);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (localStorage.getItem("DB_auth_user")) {
+      navigate("/panel");
+    }
+  }, [localStorage]);
+
   const onFormSubmit = (data: IAuthFormData) => {
     setAuthError(null);
     if (
       localStorage.getItem("DB_user") === data.username &&
       localStorage.getItem("DB_user_password") === data.password
     ) {
+      localStorage.setItem("DB_auth_user", data.username);
       navigate("/panel");
     } else {
       setAuthError("Неверный логин или пароль");
