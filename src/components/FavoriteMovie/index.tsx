@@ -7,7 +7,6 @@ import {
   selectFavoriteMovieArrayEntities,
   selectFavoriteMovieIsLoading,
 } from "@store/favoriteMovie/selectors";
-import { selectSelectedGenresArray } from "@store/genre/selectors";
 import { CustomizedDiv } from "./styles";
 import MovieView from "@components/MovieView";
 import MovieViewFilter from "@components/MovieViewFilter";
@@ -15,13 +14,12 @@ import MovieViewFilter from "@components/MovieViewFilter";
 const FavoriteMovie = () => {
   const dispatch = useAppDispatch();
 
-  const selectedGenres = useAppSelector(selectSelectedGenresArray);
   const favoriteMoviesData = useAppSelector(selectFavoriteMovieArrayEntities);
   const isFavoriteMovieLoading = useAppSelector(selectFavoriteMovieIsLoading);
 
   useEffect(() => {
     dispatch(fetchFavoriteMovies());
-  }, [selectedGenres]);
+  }, []);
 
   if (isFavoriteMovieLoading) {
     return <Preloader message="Загрузка избранных фильмов..." />;

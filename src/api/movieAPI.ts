@@ -28,7 +28,6 @@ instance.interceptors.response.use((response: AxiosResponse) => {
 
 instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   const newConfig = { ...config };
-  newConfig.url = `api/${config.url}`;
 
   if (newConfig.headers["Content-Type"] === "multipart/form-data")
     return newConfig;
