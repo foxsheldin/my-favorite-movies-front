@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import {
   IFavoriteMovieData,
   IFavoriteMovieResponseData,
@@ -6,13 +6,41 @@ import {
 import { IGenreResponseData } from "@store/genre/types";
 import { IMovieResponseData } from "@store/movie/types";
 import { IBackendData } from "./types";
+import { camelizeKeys, decamelizeKeys } from "humps";
 
 const instance = axios.create({
   baseURL: "https://api.themoviedb.org/3/",
   params: {
-    api_key: process.env.REACT_APP_MOVIE_DB_API_KEY,
+    apiKey: process.env.REACT_APP_MOVIE_DB_API_KEY,
     language: "ru",
   },
+});
+
+instance.interceptors.response.use((response: AxiosResponse) => {
+  if (
+    response.data &&
+    response.headers["content-type"] === "application/json;charset=utf-8"
+  ) {
+    response.data = camelizeKeys(response.data);
+  }
+  return response;
+});
+
+instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+  const newConfig = { ...config };
+  newConfig.url = `api/${config.url}`;
+
+  if (newConfig.headers["Content-Type"] === "multipart/form-data")
+    return newConfig;
+
+  if (config.params) {
+    newConfig.params = decamelizeKeys(config.params);
+  }
+  if (config.data) {
+    newConfig.data = decamelizeKeys(config.data);
+  }
+
+  return newConfig;
 });
 
 export const movieAPI = {
@@ -30,7 +58,7 @@ export const movieAPI = {
   getMoviesList(genre: number[]) {
     return instance.get<IMovieResponseData>("discover/movie", {
       params: {
-        with_genres: genre.join(","),
+        withGenres: genre.join(","),
       },
     });
   },
@@ -42,8 +70,8 @@ export const movieAPI = {
       const result = {
         page: 1,
         results: favoriteMovies,
-        total_pages: 1,
-        total_results: favoriteMovies.length,
+        totalPages: 1,
+        totalResults: favoriteMovies.length,
       };
       resolve(result);
     });
@@ -114,7 +142,7 @@ export const movieAPI = {
         (item: IFavoriteMovieData) => item.id === movieId
       );
       if (result) {
-        result.user_watched = !result?.user_watched;
+        result.userWatched = !result?.userWatched;
 
         localStorage.setItem(
           "DB_user_data",

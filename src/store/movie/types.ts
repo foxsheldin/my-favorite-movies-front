@@ -1,23 +1,23 @@
 export interface IMovieResponseData {
   page: number;
   results: IMovieData[];
-  total_pages: number;
-  total_results: number;
+  totalPages: number;
+  totalResults: number;
 }
 
 export interface IMovieData {
   adult: boolean;
-  backdrop_path: string;
-  genre_ids: number[] | string[];
+  backdropPath: string;
+  genreIds: number[] | string[];
   id: number;
-  original_language: string;
-  original_title: string;
+  originalLanguage: string;
+  originalTitle: string;
   overview: string;
   popularity: number;
-  poster_path: string;
-  release_date: string;
+  posterPath: string;
+  releaseDate: string;
   title: string;
   video: boolean;
-  vote_average: number;
-  vote_count: number;
+  voteAverage: number;
+  voteCount: number;
 }

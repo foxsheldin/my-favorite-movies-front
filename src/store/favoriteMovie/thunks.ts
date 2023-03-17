@@ -39,7 +39,7 @@ export const updateWatchedFavoriteMovie = createAsyncThunk(
       thunkAPI.dispatch(
         favoriteMovieSlice.actions.updateFavoriteMovie({
           ...movieData,
-          user_watched: !movieData?.user_watched,
+          userWatched: !movieData?.userWatched,
         })
       );
       const response = await movieAPI.updateWatchedMovieStatus(
@@ -51,7 +51,7 @@ export const updateWatchedFavoriteMovie = createAsyncThunk(
       thunkAPI.dispatch(
         favoriteMovieSlice.actions.updateFavoriteMovie({
           ...movieData,
-          user_watched: !movieData?.user_watched,
+          userWatched: !movieData?.userWatched,
         })
       );
       return thunkAPI.rejectWithValue(loadingStatuses.failed);

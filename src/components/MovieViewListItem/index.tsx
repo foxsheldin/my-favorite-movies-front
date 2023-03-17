@@ -20,7 +20,7 @@ const MovieViewListItem = ({ movie }: IMovieViewListItemProps) => {
       </TableCell>
       <TableCell align="center">
         <img
-          src={`${getPathImageW500(movie?.poster_path as string)}`}
+          src={`${getPathImageW500(movie?.posterPath as string)}`}
           width="75"
           height="113"
           loading="lazy"
@@ -30,13 +30,13 @@ const MovieViewListItem = ({ movie }: IMovieViewListItemProps) => {
       <TableCell>{movie?.overview}</TableCell>
       <TableCell align="right">
         <MovieAction
-          isFavorite={movie?.user_favorite}
-          isWatched={movie?.user_watched}
+          isFavorite={movie?.userFavorite}
+          isWatched={movie?.userWatched}
           onFavoriteButtonClick={() =>
             dispatch(updateFavoriteMovie(movie as IFavoriteMovieData))
           }
           onWatchButtonClick={
-            movie?.user_favorite
+            movie?.userFavorite
               ? () => dispatch(updateWatchedFavoriteMovie(movie))
               : undefined
           }

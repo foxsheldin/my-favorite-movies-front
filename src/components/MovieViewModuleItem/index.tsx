@@ -21,7 +21,7 @@ const MovieViewModuleItem = ({ movie }: IMovieViewModuleItemProps) => {
   return (
     <CustomizedPaper>
       <CustomizedImage
-        src={`${getPathImageOriginal(movie?.poster_path as string)}`}
+        src={`${getPathImageOriginal(movie?.posterPath as string)}`}
         loading="lazy"
         alt={`Постер фильма ${movie?.title}`}
       />
@@ -35,13 +35,13 @@ const MovieViewModuleItem = ({ movie }: IMovieViewModuleItemProps) => {
         {movie?.overview}
       </CustomizedTypographyOverview>
       <MovieAction
-        isFavorite={movie?.user_favorite}
-        isWatched={movie?.user_watched}
+        isFavorite={movie?.userFavorite}
+        isWatched={movie?.userWatched}
         onFavoriteButtonClick={() =>
           dispatch(updateFavoriteMovie(movie as IFavoriteMovieData))
         }
         onWatchButtonClick={
-          movie?.user_favorite
+          movie?.userFavorite
             ? () => dispatch(updateWatchedFavoriteMovie(movie))
             : undefined
         }

@@ -27,7 +27,7 @@ export const selectFavoriteMovieById = (
 export const selectFavoriteMovieByIdIsWatched = (
   state: RootState,
   { movieId }: ISelectFavoriteMovieArgsWithMovieId
-) => selectFavoriteMovieById(state, { movieId })?.user_watched;
+) => selectFavoriteMovieById(state, { movieId })?.userWatched;
 
 export const selectFavoriteMovieLoadingStatus = (state: RootState) =>
   selectFavoriteMovieModuleState(state).status;
