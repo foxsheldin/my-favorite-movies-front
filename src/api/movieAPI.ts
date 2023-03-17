@@ -1,15 +1,15 @@
 import axios, { AxiosResponse, InternalAxiosRequestConfig } from "axios";
+import { camelizeKeys, decamelizeKeys } from "humps";
 import {
   IFavoriteMovieData,
   IFavoriteMovieResponseData,
 } from "@store/favoriteMovie/types";
 import { IGenreResponseData } from "@store/genre/types";
 import { IMovieResponseData } from "@store/movie/types";
-import { IBackendData } from "./types";
-import { camelizeKeys, decamelizeKeys } from "humps";
+import { BASE_DB_URL } from "./constants";
 
 const instance = axios.create({
-  baseURL: "https://api.themoviedb.org/3/",
+  baseURL: BASE_DB_URL,
   params: {
     apiKey: process.env.REACT_APP_MOVIE_DB_API_KEY,
     language: "ru",
@@ -48,8 +48,8 @@ export const movieAPI = {
   },
   getFavoriteGenre() {
     return new Promise<number[]>((resolve, reject) => {
-      const { favoriteGenres }: IBackendData = JSON.parse(
-        localStorage.getItem("DB_user_data") as string
+      const favoriteGenres: number[] = JSON.parse(
+        localStorage.getItem("DB_user_favorite_genres") as string
       );
       resolve(favoriteGenres);
     });
@@ -63,8 +63,8 @@ export const movieAPI = {
   },
   getFavoriteMovieList() {
     return new Promise<IFavoriteMovieResponseData>((resolve, reject) => {
-      const { favoriteMovies }: IBackendData = JSON.parse(
-        localStorage.getItem("DB_user_data") as string
+      const favoriteMovies: IFavoriteMovieData[] = JSON.parse(
+        localStorage.getItem("DB_user_favorite_movies") as string
       );
       const result = {
         page: 1,
@@ -77,16 +77,13 @@ export const movieAPI = {
   },
   updateSelectedGenres(selectedGenres: number[]) {
     return new Promise<number[]>((resolve, reject) => {
-      const result: IBackendData = JSON.parse(
-        localStorage.getItem("DB_user_data") as string
+      const result: number[] = JSON.parse(
+        localStorage.getItem("DB_user_favorite_genres") as string
       );
 
       localStorage.setItem(
-        "DB_user_data",
-        JSON.stringify({
-          favoriteMovies: [...result.favoriteMovies],
-          favoriteGenres: [...selectedGenres],
-        })
+        "DB_user_favorite_genres",
+        JSON.stringify([...selectedGenres])
       );
 
       resolve(selectedGenres);
@@ -94,61 +91,46 @@ export const movieAPI = {
   },
   createFavoriteMovie(movieData: IFavoriteMovieData) {
     return new Promise<IFavoriteMovieData[]>((resolve, reject) => {
-      const tempObject: IBackendData = JSON.parse(
-        localStorage.getItem("DB_user_data") as string
+      const tempObject: IFavoriteMovieData[] = JSON.parse(
+        localStorage.getItem("DB_user_favorite_movies") as string
       );
 
-      const result = [...tempObject.favoriteMovies, movieData];
+      const result = [...tempObject, movieData];
 
-      localStorage.setItem(
-        "DB_user_data",
-        JSON.stringify({
-          favoriteMovies: result,
-          favoriteGenres: [...tempObject.favoriteGenres],
-        })
-      );
+      localStorage.setItem("DB_user_favorite_movies", JSON.stringify(result));
 
       resolve(result);
     });
   },
   deleteFavoriteMovie(movieId: number) {
     return new Promise<IFavoriteMovieData[]>((resolve, reject) => {
-      const tempObject: IBackendData = JSON.parse(
-        localStorage.getItem("DB_user_data") as string
+      const tempObject: IFavoriteMovieData[] = JSON.parse(
+        localStorage.getItem("DB_user_favorite_movies") as string
       );
-      const result = tempObject.favoriteMovies.filter(
+      const result = tempObject.filter(
         (item: IFavoriteMovieData) => item?.id !== movieId
       );
 
-      localStorage.setItem(
-        "DB_user_data",
-        JSON.stringify({
-          favoriteMovies: result,
-          favoriteGenres: [...tempObject.favoriteGenres],
-        })
-      );
+      localStorage.setItem("DB_user_favorite_movies", JSON.stringify(result));
 
       resolve(result);
     });
   },
   updateWatchedMovieStatus(movieId: number) {
     return new Promise<IFavoriteMovieData>((resolve, reject) => {
-      const tempObject: IBackendData = JSON.parse(
-        localStorage.getItem("DB_user_data") as string
+      const tempObject: IFavoriteMovieData[] = JSON.parse(
+        localStorage.getItem("DB_user_favorite_movies") as string
       );
 
-      const result = tempObject.favoriteMovies.find(
+      const result = tempObject.find(
         (item: IFavoriteMovieData) => item.id === movieId
       );
       if (result) {
         result.userWatched = !result?.userWatched;
 
         localStorage.setItem(
-          "DB_user_data",
-          JSON.stringify({
-            favoriteMovies: [...tempObject.favoriteMovies, result],
-            favoriteGenres: [...tempObject.favoriteGenres],
-          })
+          "DB_user_favorite_movies",
+          JSON.stringify([...tempObject, result])
         );
 
         resolve(result);
