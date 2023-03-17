@@ -2,7 +2,7 @@ import React from "react";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import ClearIcon from "@mui/icons-material/Clear";
 import StarIcon from "@mui/icons-material/Star";
-import { IconButton, Tooltip } from "@mui/material";
+import TooltipIconButton from "@components/TooltipIconButton";
 import { IMovieActionProps } from "./types";
 import { useAppDispatch } from "@store/hooks";
 import {
@@ -15,27 +15,25 @@ const MovieAction = ({ movie }: IMovieActionProps) => {
 
   return (
     <div>
-      <Tooltip title="Просмотрено">
-        <IconButton
-          color={movie.userWatched ? "primary" : "default"}
-          onClick={
-            movie?.userFavorite
-              ? () => dispatch(updateWatchedFavoriteMovie(movie))
-              : undefined
-          }
-        >
-          <VisibilityIcon />
-        </IconButton>
-      </Tooltip>
-      <Tooltip
+      <TooltipIconButton
+        title="Просмотрено"
+        color={movie.userWatched ? "primary" : "default"}
+        onClick={
+          movie?.userFavorite
+            ? () => dispatch(updateWatchedFavoriteMovie(movie))
+            : undefined
+        }
+      >
+        <VisibilityIcon />
+      </TooltipIconButton>
+      <TooltipIconButton
         title={
           movie.userFavorite ? "Удалить из избранного" : "Добавить в избранное"
         }
+        onClick={() => dispatch(updateFavoriteMovie(movie))}
       >
-        <IconButton onClick={() => dispatch(updateFavoriteMovie(movie))}>
-          {movie.userFavorite ? <ClearIcon /> : <StarIcon color="primary" />}
-        </IconButton>
-      </Tooltip>
+        {movie.userFavorite ? <ClearIcon /> : <StarIcon color="primary" />}
+      </TooltipIconButton>
     </div>
   );
 };
