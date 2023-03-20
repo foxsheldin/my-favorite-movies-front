@@ -1,0 +1,142 @@
+import axios, { AxiosResponse, InternalAxiosRequestConfig } from "axios";
+import { camelizeKeys, decamelizeKeys } from "humps";
+import {
+  IFavoriteMovieData,
+  IFavoriteMovieResponseData,
+} from "@store/favoriteMovie/types";
+import { IGenreResponseData } from "@store/genre/types";
+import { IMovieResponseData } from "@store/movie/types";
+import { BASE_DB_URL } from "./constants";
+
+const instance = axios.create({
+  baseURL: BASE_DB_URL,
+  params: {
+    apiKey: process.env.REACT_APP_MOVIE_DB_API_KEY,
+    language: "ru",
+  },
+});
+
+instance.interceptors.response.use((response: AxiosResponse) => {
+  if (
+    response.data &&
+    response.headers["content-type"] === "application/json;charset=utf-8"
+  ) {
+    response.data = camelizeKeys(response.data);
+  }
+  return response;
+});
+
+instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+  const newConfig = { ...config };
+
+  if (newConfig.headers["Content-Type"] === "multipart/form-data")
+    return newConfig;
+
+  if (config.params) {
+    newConfig.params = decamelizeKeys(config.params);
+  }
+  if (config.data) {
+    newConfig.data = decamelizeKeys(config.data);
+  }
+
+  return newConfig;
+});
+
+export const movieAPI = {
+  getGenre() {
+    return instance.get<IGenreResponseData>("genre/movie/list");
+  },
+  getFavoriteGenre() {
+    return new Promise<number[]>((resolve, reject) => {
+      const favoriteGenres: number[] = JSON.parse(
+        localStorage.getItem("DB_user_favorite_genres") as string
+      );
+      resolve(favoriteGenres);
+    });
+  },
+  getMoviesList(genre: number[]) {
+    return instance.get<IMovieResponseData>("discover/movie", {
+      params: {
+        withGenres: genre.join(","),
+      },
+    });
+  },
+  getFavoriteMovieList() {
+    return new Promise<IFavoriteMovieResponseData>((resolve, reject) => {
+      const favoriteMovies: IFavoriteMovieData[] = JSON.parse(
+        localStorage.getItem("DB_user_favorite_movies") as string
+      );
+      const result = {
+        page: 1,
+        results: favoriteMovies,
+        totalPages: 1,
+        totalResults: favoriteMovies.length,
+      };
+      resolve(result);
+    });
+  },
+  updateSelectedGenres(selectedGenres: number[]) {
+    return new Promise<number[]>((resolve, reject) => {
+      const result: number[] = JSON.parse(
+        localStorage.getItem("DB_user_favorite_genres") as string
+      );
+
+      localStorage.setItem(
+        "DB_user_favorite_genres",
+        JSON.stringify([...selectedGenres])
+      );
+
+      resolve(selectedGenres);
+    });
+  },
+  createFavoriteMovie(movieData: IFavoriteMovieData) {
+    return new Promise<IFavoriteMovieData[]>((resolve, reject) => {
+      const tempObject: IFavoriteMovieData[] = JSON.parse(
+        localStorage.getItem("DB_user_favorite_movies") as string
+      );
+
+      const result = [...tempObject, movieData];
+
+      localStorage.setItem("DB_user_favorite_movies", JSON.stringify(result));
+
+      resolve(result);
+    });
+  },
+  deleteFavoriteMovie(movieId: number) {
+    return new Promise<IFavoriteMovieData[]>((resolve, reject) => {
+      const tempObject: IFavoriteMovieData[] = JSON.parse(
+        localStorage.getItem("DB_user_favorite_movies") as string
+      );
+      const result = tempObject.filter(
+        (item: IFavoriteMovieData) => item?.id !== movieId
+      );
+
+      localStorage.setItem("DB_user_favorite_movies", JSON.stringify(result));
+
+      resolve(result);
+    });
+  },
+  updateWatchedMovieStatus(movieId: number) {
+    return new Promise<IFavoriteMovieData>((resolve, reject) => {
+      const tempObject: IFavoriteMovieData[] = JSON.parse(
+        localStorage.getItem("DB_user_favorite_movies") as string
+      );
+
+      const result = tempObject.find(
+        (item: IFavoriteMovieData) => item.id === movieId
+      );
+      if (result) {
+        result.userWatched = !result?.userWatched;
+
+        localStorage.setItem(
+          "DB_user_favorite_movies",
+          JSON.stringify([...tempObject, result])
+        );
+
+        resolve(result);
+      } else {
+        reject("");
+      }
+    });
+  },
+};

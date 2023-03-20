@@ -1,12 +1,12 @@
 import { Field, Form } from "react-final-form";
-import React, { useState } from "react";
-import { Button, Paper } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Button } from "@mui/material";
 import { IAuthFormData } from "./types";
 import { useNavigate } from "react-router-dom";
 import {
-  CustomizedTextField,
+  TextFieldSizeWrapper,
   CustomizedTypography,
-  CustomizedPaper,
+  WrappedPaper,
 } from "./styles";
 import {
   composeValidators,
@@ -20,12 +20,19 @@ const AuthForm = () => {
   const [authError, setAuthError] = useState<string | null>(null);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (localStorage.getItem("DB_auth_user")) {
+      navigate("/panel");
+    }
+  }, [localStorage]);
+
   const onFormSubmit = (data: IAuthFormData) => {
     setAuthError(null);
     if (
       localStorage.getItem("DB_user") === data.username &&
       localStorage.getItem("DB_user_password") === data.password
     ) {
+      localStorage.setItem("DB_auth_user", data.username);
       navigate("/panel");
     } else {
       setAuthError("Неверный логин или пароль");
@@ -42,7 +49,7 @@ const AuthForm = () => {
               {authError}
             </CustomizedTypography>
           )}
-          <CustomizedPaper>
+          <WrappedPaper>
             <Field<string>
               name="username"
               validate={composeValidators(
@@ -51,7 +58,7 @@ const AuthForm = () => {
                 forbiddenСharacters
               )}
               render={({ input, meta }) => (
-                <CustomizedTextField
+                <TextFieldSizeWrapper
                   {...input}
                   label="Имя пользователя или e-mail"
                   error={meta.touched && !!meta.error}
@@ -63,7 +70,7 @@ const AuthForm = () => {
               name="password"
               validate={composeValidators(required, minLength8)}
               render={({ input, meta }) => (
-                <CustomizedTextField
+                <TextFieldSizeWrapper
                   {...input}
                   type="password"
                   label="Пароль"
@@ -75,7 +82,7 @@ const AuthForm = () => {
             <Button variant="contained" type="submit">
               Войти
             </Button>
-          </CustomizedPaper>
+          </WrappedPaper>
         </form>
       )}
     />
