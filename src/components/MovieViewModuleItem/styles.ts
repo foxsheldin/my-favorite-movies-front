@@ -1,17 +1,17 @@
 import { Paper, styled, Typography } from "@mui/material";
 
-export const CustomizedPaper = styled(Paper)`
+export const WrappedPaper = styled(Paper)`
   display: grid;
   grid-template-rows: max-content 50px 100px max-content;
   text-align: center;
 `;
 
-export const CustomizedImage = styled("img")`
+export const ImageSizeWrapper = styled("img")`
   height: 340px;
   width: 100%;
 `;
 
-export const CustomizedTypographyTitle = styled(Typography)`
+export const TypographyTitleWrapper = styled(Typography)`
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -20,7 +20,7 @@ export const CustomizedTypographyTitle = styled(Typography)`
   vertical-align: middle;
 `;
 
-export const CustomizedTypographyOverview = styled(Typography)`
+export const TypographyOverviewWrapper = styled(Typography)`
   max-height: 100px;
   overflow: hidden auto;
 `;

@@ -3,6 +3,7 @@ import { TableCell, TableRow, Typography } from "@mui/material";
 import MovieAction from "@components/MovieAction";
 import { IMovieViewListItemProps } from "./types";
 import { getImagePath } from "@helpers/getPathImage";
+import { ImageSizeWrapper } from "./styles";
 
 const MovieViewListItem = ({ movie }: IMovieViewListItemProps) => {
   return (
@@ -11,10 +12,8 @@ const MovieViewListItem = ({ movie }: IMovieViewListItemProps) => {
         <Typography variant="subtitle2">{movie?.title}</Typography>
       </TableCell>
       <TableCell align="center">
-        <img
+        <ImageSizeWrapper
           src={`${getImagePath("w500", movie?.posterPath)}`}
-          width="75"
-          height="113"
           loading="lazy"
           alt={`Постер фильма ${movie?.title}`}
         />

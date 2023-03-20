@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { CustomizedContainer, CustomizedDiv, CustomizedHeader } from "./styles";
+import { WrappedContainer, AccountWrapper, WrappedHeader } from "./styles";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -12,19 +12,19 @@ const NavBar = () => {
   };
 
   return (
-    <CustomizedHeader>
-      <CustomizedContainer>
+    <WrappedHeader>
+      <WrappedContainer>
         <Typography variant="h5" component="p">
           My Favorite Movies
         </Typography>
-        <CustomizedDiv>
+        <AccountWrapper>
           <Typography>
             Hello, {localStorage.getItem("DB_auth_user")}!
           </Typography>
           <Button onClick={onLogoutClick}>Log out</Button>
-        </CustomizedDiv>
-      </CustomizedContainer>
-    </CustomizedHeader>
+        </AccountWrapper>
+      </WrappedContainer>
+    </WrappedHeader>
   );
 };
 

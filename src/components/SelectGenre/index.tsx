@@ -5,7 +5,7 @@ import Preloader from "@components/Preloader";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { selectGenreIsLoading } from "@store/genre/selectors";
 import { fetchGenres } from "@store/genre/thunks";
-import { CustomizedContainer } from "./styles";
+import { WrappedContainer } from "./styles";
 
 const SelectGenre = () => {
   const dispatch = useAppDispatch();
@@ -21,12 +21,12 @@ const SelectGenre = () => {
 
   return (
     <Paper>
-      <CustomizedContainer>
+      <WrappedContainer>
         <Typography variant="h5" component="p">
           Выберите ваш любимый жанр
         </Typography>
         <GenreList />
-      </CustomizedContainer>
+      </WrappedContainer>
     </Paper>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import AuthForm from "@components/AuthForm";
-import { CustomizedContainer } from "./styles";
+import { WrappedContainer } from "./styles";
 import logo from "@images/movie-logo.webp";
 import { backendData } from "temp/backendData";
 
@@ -19,10 +19,10 @@ const AuthPage = () => {
   }, []);
 
   return (
-    <CustomizedContainer>
+    <WrappedContainer>
       <img src={logo} width={150} height={150} />
       <AuthForm />
-    </CustomizedContainer>
+    </WrappedContainer>
   );
 };
 

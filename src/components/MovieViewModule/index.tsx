@@ -1,15 +1,15 @@
 import React from "react";
 import MovieViewModuleItem from "@components/MovieViewModuleItem";
-import { CustomizedDiv } from "./styles";
+import { Wrapper } from "./styles";
 import { IMovieViewModuleProps } from "./types";
 
 const MovieViewModule = ({ movies }: IMovieViewModuleProps) => {
   return (
-    <CustomizedDiv>
+    <Wrapper>
       {movies?.map((movie) => (
         <MovieViewModuleItem key={movie?.id} movie={movie} />
       ))}
-    </CustomizedDiv>
+    </Wrapper>
   );
 };
 

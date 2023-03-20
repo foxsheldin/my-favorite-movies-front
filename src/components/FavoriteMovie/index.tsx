@@ -7,7 +7,7 @@ import {
   selectFavoriteMovieArrayEntities,
   selectFavoriteMovieIsLoading,
 } from "@store/favoriteMovie/selectors";
-import { CustomizedDiv } from "./styles";
+import { WrappedDiv } from "./styles";
 import MovieView from "@components/MovieView";
 import MovieViewFilter from "@components/MovieViewFilter";
 
@@ -29,7 +29,7 @@ const FavoriteMovie = () => {
     <>
       <Paper>
         <Container>
-          <CustomizedDiv>
+          <WrappedDiv>
             <Typography variant="h5" component="p">
               Ваши избранные фильмы
             </Typography>
@@ -37,7 +37,7 @@ const FavoriteMovie = () => {
               <Button>Добавить</Button>
               {!!favoriteMoviesData.length && <MovieViewFilter />}
             </div>
-          </CustomizedDiv>
+          </WrappedDiv>
         </Container>
       </Paper>
       <MovieView movies={favoriteMoviesData} />

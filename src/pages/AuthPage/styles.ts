@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Container } from "@mui/material";
 
-export const CustomizedContainer = styled(Container)`
+export const WrappedContainer = styled(Container)`
   width: 100vw;
   height: 100vh;
   display: flex;
