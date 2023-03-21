@@ -36,6 +36,9 @@
     },
     "authorization": {
       "wrongLoginOrPassword": "Wrong login or password"
+    },
+    "data": {
+      "noData": "No data"
     }
   }
 }

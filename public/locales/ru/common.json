@@ -36,6 +36,9 @@
     },
     "authorization": {
       "wrongLoginOrPassword": "Неверный логин или пароль"
+    },
+    "data": {
+      "noData": "Нет данных"
     }
   }
 }
