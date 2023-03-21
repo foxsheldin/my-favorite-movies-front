@@ -2,9 +2,12 @@ import React from "react";
 import { Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { WrappedContainer, AccountWrapper, WrappedHeader } from "./styles";
+import ChangeLanguageButton from "@components/ChangeLanguageButton";
+import { useTranslation } from "react-i18next";
 
 const NavBar = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const onLogoutClick = () => {
     localStorage.removeItem("DB_auth_user");
@@ -15,13 +18,16 @@ const NavBar = () => {
     <WrappedHeader>
       <WrappedContainer>
         <Typography variant="h5" component="p">
-          My Favorite Movies
+          {t("navBar.serviceName")}
         </Typography>
         <AccountWrapper>
+          <ChangeLanguageButton />
           <Typography>
-            Hello, {localStorage.getItem("DB_auth_user")}!
+            {t("navBar.greetings", {
+              username: localStorage.getItem("DB_auth_user"),
+            })}
           </Typography>
-          <Button onClick={onLogoutClick}>Log out</Button>
+          <Button onClick={onLogoutClick}>{t("navBar.logoutButton")}</Button>
         </AccountWrapper>
       </WrappedContainer>
     </WrappedHeader>

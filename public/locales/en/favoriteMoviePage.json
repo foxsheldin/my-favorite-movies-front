@@ -1,0 +1,12 @@
+{
+  "title": {
+    "page": "Favorite",
+    "genres": "Select your favorite genres",
+    "movies": "Your favorite movies",
+    "addFavoriteButton": "Add movie"
+  },
+  "loadingStatuses": {
+    "movies": "Loading favorite movies...",
+    "genres": "Loading favorite genres..."
+  }
+}

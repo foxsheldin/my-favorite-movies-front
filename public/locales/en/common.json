@@ -1,0 +1,41 @@
+{
+  "navBar": {
+    "serviceName": "My Favorite Movies",
+    "greetings": "Hello, {{username}}!",
+    "logoutButton": "Log out"
+  },
+  "movie": {
+    "tableHeader": {
+      "title": "Movie title",
+      "description": "Description",
+      "action": "Actions"
+    },
+    "tableBody": {
+      "posterTitle": "Poster of the movie \"{{movieTitle}}\""
+    },
+    "action": {
+      "watched": "Watched",
+      "addFavorite": "Add to favorites",
+      "removeFavorite": "Remove from favorites"
+    }
+  },
+  "authorization": {
+    "login": "Username or E-mail",
+    "password": "Password",
+    "signIn": "Sign In"
+  },
+  "loadingStatuses": {
+    "inProgress": "Loading data..."
+  },
+  "error": {
+    "validate": {
+      "required": "Required field",
+      "minLength8": "Minimum 8 characters",
+      "minLength3": "Minimum 3 characters",
+      "forbiddenСharacters": "You cannot use space, more than one dot (.), and symbols: !#$%&~=,'"
+    },
+    "authorization": {
+      "wrongLoginOrPassword": "Wrong login or password"
+    }
+  }
+}

@@ -23,7 +23,8 @@
       "@images/*": ["assets/image/*", "assets/image"],
       "@helpers/*": ["helpers/*"],
       "@pages/*": ["pages/*"],
-      "@store/*": ["store/*"]
+      "@store/*": ["store/*"],
+      "@utils/*": ["utils/*"]
     }
   },
   "include": ["src"]
