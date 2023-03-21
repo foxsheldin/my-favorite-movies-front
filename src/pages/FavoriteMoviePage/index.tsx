@@ -6,7 +6,7 @@ import { WrappedContainer } from "./styles";
 import { useTranslation } from "react-i18next";
 
 const FavoriteMoviePage = () => {
-  const { t } = useTranslation("favoriteMoviePage");
+  const { t } = useTranslation("favorite-movie-page");
 
   return (
     <WrappedContainer>

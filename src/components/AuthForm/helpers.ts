@@ -1,5 +1,3 @@
-/* TODO: А нельзя ли перевод сделать реактивным? */
-
 import i18next, { DefaultTFuncReturn } from "i18next";
 
 export const composeValidators =

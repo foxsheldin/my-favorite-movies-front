@@ -13,7 +13,7 @@ import MovieViewFilter from "@components/MovieViewFilter";
 import { useTranslation } from "react-i18next";
 
 const FavoriteMovie = () => {
-  const { t, i18n } = useTranslation("favoriteMoviePage");
+  const { t, i18n } = useTranslation("favorite-movie-page");
   const dispatch = useAppDispatch();
 
   const favoriteMoviesData = useAppSelector(selectFavoriteMovieArrayEntities);

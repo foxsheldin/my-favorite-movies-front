@@ -9,7 +9,7 @@ import { WrappedContainer } from "./styles";
 import { useTranslation } from "react-i18next";
 
 const SelectGenre = () => {
-  const { t, i18n } = useTranslation("favoriteMoviePage");
+  const { t, i18n } = useTranslation("favorite-movie-page");
   const dispatch = useAppDispatch();
   const isGenreLoading = useAppSelector(selectGenreIsLoading);
 
