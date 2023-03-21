@@ -15,9 +15,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <Suspense
-      fallback={<Preloader message={i18next.t("loadingStatuses.inProgress")} />}
-    >
+    <Suspense fallback={<Preloader message={"Loading..."} />}>
       <Provider store={store}>
         <ThemeProvider theme={theme}>
           <CssBaseline />

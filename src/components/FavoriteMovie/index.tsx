@@ -13,7 +13,7 @@ import MovieViewFilter from "@components/MovieViewFilter";
 import { useTranslation } from "react-i18next";
 
 const FavoriteMovie = () => {
-  const { t } = useTranslation("favoriteMoviePage");
+  const { t, i18n } = useTranslation("favoriteMoviePage");
   const dispatch = useAppDispatch();
 
   const favoriteMoviesData = useAppSelector(selectFavoriteMovieArrayEntities);
@@ -21,7 +21,7 @@ const FavoriteMovie = () => {
 
   useEffect(() => {
     dispatch(fetchFavoriteMovies());
-  }, []);
+  }, [i18n.resolvedLanguage]);
 
   if (isFavoriteMovieLoading) {
     return <Preloader message={t("loadingStatuses.movies")} />;

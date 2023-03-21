@@ -9,13 +9,13 @@ import { WrappedContainer } from "./styles";
 import { useTranslation } from "react-i18next";
 
 const SelectGenre = () => {
-  const { t } = useTranslation("favoriteMoviePage");
+  const { t, i18n } = useTranslation("favoriteMoviePage");
   const dispatch = useAppDispatch();
   const isGenreLoading = useAppSelector(selectGenreIsLoading);
 
   useEffect(() => {
     dispatch(fetchGenres());
-  }, []);
+  }, [i18n.resolvedLanguage]);
 
   if (isGenreLoading) {
     return <Preloader message={t("loadingStatuses.genres")} />;
