@@ -1,3 +1,11 @@
+import { loadingStatuses } from "@constants/loadingStatuses";
+
+export interface IMovieAdditionalInitialState {
+  status: loadingStatuses;
+  page: number;
+  totalPages: number;
+}
+
 export interface IMovieResponseData {
   page: number;
   results: IMovieData[];
