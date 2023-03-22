@@ -11,7 +11,7 @@ import { IFavoriteMovieData } from "./types";
 
 export const fetchFavoriteMovies = createAsyncThunk(
   "favoriteMovie/fetchFavoriteMovies",
-  async (page: number, thunkAPI) => {
+  async ({ page }: { page: number }, thunkAPI) => {
     const state: RootState = thunkAPI.getState() as RootState;
 
     if (selectFilterCurrentLanguage(state) !== i18next.resolvedLanguage) {

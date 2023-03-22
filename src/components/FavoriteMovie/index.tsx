@@ -24,7 +24,7 @@ const FavoriteMovie = () => {
   const totalPages = useAppSelector(selectFavoriteMovieTotalPages);
 
   useEffect(() => {
-    dispatch(fetchFavoriteMovies(1));
+    dispatch(fetchFavoriteMovies({ page: 1 }));
   }, [i18n.resolvedLanguage]);
 
   if (isFavoriteMovieLoading) {
@@ -48,7 +48,7 @@ const FavoriteMovie = () => {
       </Paper>
       <MovieView
         movies={favoriteMoviesData}
-        onPageChange={(page) => dispatch(fetchFavoriteMovies(page))}
+        onPageChange={(page) => dispatch(fetchFavoriteMovies({ page }))}
         currentPage={currentPage}
         totalPages={totalPages}
       />
