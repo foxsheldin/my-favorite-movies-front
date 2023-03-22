@@ -1,4 +1,11 @@
+import { loadingStatuses } from "@constants/loadingStatuses";
 import { IMovieData } from "@store/movie/types";
+
+export interface IFavoriteMovieAdditionalInitialState {
+  status: loadingStatuses;
+  page: number;
+  totalPages: number;
+}
 
 export interface IFavoriteMovieResponseData {
   page: number;

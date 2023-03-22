@@ -8,6 +8,12 @@ import {
 export const selectFavoriteMovieModuleState = (state: RootState) =>
   state.favoriteMovie;
 
+export const selectFavoriteMovieCurrentPage = (state: RootState) =>
+  selectFavoriteMovieModuleState(state).page;
+
+export const selectFavoriteMovieTotalPages = (state: RootState) =>
+  selectFavoriteMovieModuleState(state).totalPages;
+
 export const selectFavoriteMovieIds = (state: RootState) =>
   selectFavoriteMovieModuleState(state).ids;
 

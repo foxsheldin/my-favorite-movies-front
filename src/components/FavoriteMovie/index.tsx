@@ -1,16 +1,18 @@
 import React, { useEffect } from "react";
 import { Button, Container, Paper, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import Preloader from "@components/Preloader";
 import { fetchFavoriteMovies } from "@store/favoriteMovie/thunks";
 import {
   selectFavoriteMovieArrayEntities,
+  selectFavoriteMovieCurrentPage,
   selectFavoriteMovieIsLoading,
+  selectFavoriteMovieTotalPages,
 } from "@store/favoriteMovie/selectors";
 import { WrappedDiv } from "./styles";
 import MovieView from "@components/MovieView";
 import MovieViewFilter from "@components/MovieViewFilter";
-import { useTranslation } from "react-i18next";
 
 const FavoriteMovie = () => {
   const { t, i18n } = useTranslation("favorite-movie-page");
@@ -18,9 +20,11 @@ const FavoriteMovie = () => {
 
   const favoriteMoviesData = useAppSelector(selectFavoriteMovieArrayEntities);
   const isFavoriteMovieLoading = useAppSelector(selectFavoriteMovieIsLoading);
+  const currentPage = useAppSelector(selectFavoriteMovieCurrentPage);
+  const totalPages = useAppSelector(selectFavoriteMovieTotalPages);
 
   useEffect(() => {
-    dispatch(fetchFavoriteMovies());
+    dispatch(fetchFavoriteMovies({ page: 1 }));
   }, [i18n.resolvedLanguage]);
 
   if (isFavoriteMovieLoading) {
@@ -42,7 +46,12 @@ const FavoriteMovie = () => {
           </WrappedDiv>
         </Container>
       </Paper>
-      <MovieView movies={favoriteMoviesData} />
+      <MovieView
+        movies={favoriteMoviesData}
+        onPageChange={(page) => dispatch(fetchFavoriteMovies({ page }))}
+        currentPage={currentPage}
+        totalPages={totalPages}
+      />
     </>
   );
 };

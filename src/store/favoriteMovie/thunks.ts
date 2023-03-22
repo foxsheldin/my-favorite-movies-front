@@ -1,6 +1,9 @@
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import i18next from "i18next";
 import { loadingStatuses } from "@constants/loadingStatuses";
 import { movieAPI } from "@api/movieAPI";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { selectFilterCurrentLanguage } from "@store/filter/selectors";
+import { filterSlice } from "@store/filter";
 import { favoriteMovieSlice } from ".";
 import { RootState } from "..";
 import { selectFavoriteMovieIsIncludesId } from "./selectors";
@@ -8,9 +11,15 @@ import { IFavoriteMovieData } from "./types";
 
 export const fetchFavoriteMovies = createAsyncThunk(
   "favoriteMovie/fetchFavoriteMovies",
-  async (_, thunkAPI) => {
-    const response = await movieAPI.getFavoriteMovieList();
-    return response.results;
+  async ({ page }: { page: number }, thunkAPI) => {
+    const state: RootState = thunkAPI.getState() as RootState;
+
+    if (selectFilterCurrentLanguage(state) !== i18next.resolvedLanguage) {
+      filterSlice.actions.updateCurrentLanguage(i18next.resolvedLanguage);
+    }
+
+    const response = await movieAPI.getFavoriteMovieList(page);
+    return response;
   }
 );
 

@@ -58,20 +58,22 @@ export const movieAPI = {
       resolve(favoriteGenres);
     });
   },
-  getMoviesList(genre: number[]) {
+  getMoviesList(genre: number[], page: number = 1) {
     return instance.get<IMovieResponseData>("discover/movie", {
       params: {
+        language: i18next.resolvedLanguage,
         withGenres: genre.join(","),
+        page,
       },
     });
   },
-  getFavoriteMovieList() {
+  getFavoriteMovieList(page: number = 1) {
     return new Promise<IFavoriteMovieResponseData>((resolve, reject) => {
       const favoriteMovies: IFavoriteMovieData[] = JSON.parse(
         localStorage.getItem("DB_user_favorite_movies") as string
       );
       const result = {
-        page: 1,
+        page: page,
         results: favoriteMovies,
         totalPages: 1,
         totalResults: favoriteMovies.length,

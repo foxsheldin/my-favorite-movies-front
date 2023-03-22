@@ -1,15 +1,28 @@
-import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
+import {
+  createEntityAdapter,
+  createSlice,
+  PayloadAction,
+} from "@reduxjs/toolkit";
 import { loadingStatuses } from "@constants/loadingStatuses";
-import { IFavoriteMovieData } from "./types";
+import {
+  IFavoriteMovieData,
+  IFavoriteMovieAdditionalInitialState,
+  IFavoriteMovieResponseData,
+} from "./types";
 import { fetchFavoriteMovies, updateFavoriteMovie } from "./thunks";
 
 const favoriteMovieEntityAdapter = createEntityAdapter<IFavoriteMovieData>();
 
 export const favoriteMovieSlice = createSlice({
   name: "favoriteMovie",
-  initialState: favoriteMovieEntityAdapter.getInitialState({
-    status: loadingStatuses.idle,
-  }),
+  initialState:
+    favoriteMovieEntityAdapter.getInitialState<IFavoriteMovieAdditionalInitialState>(
+      {
+        status: loadingStatuses.idle,
+        page: 1,
+        totalPages: -1,
+      }
+    ),
   reducers: {
     updateFavoriteMovie(state, action) {
       favoriteMovieEntityAdapter.upsertOne(state, action.payload);
@@ -20,10 +33,20 @@ export const favoriteMovieSlice = createSlice({
       .addCase(fetchFavoriteMovies.pending, (state) => {
         state.status = loadingStatuses.inProgress;
       })
-      .addCase(fetchFavoriteMovies.fulfilled, (state, action) => {
-        favoriteMovieEntityAdapter.setAll(state, action.payload);
-        state.status = loadingStatuses.success;
-      })
+      .addCase(
+        fetchFavoriteMovies.fulfilled,
+        (
+          state,
+          {
+            payload: { results, page, totalPages },
+          }: PayloadAction<IFavoriteMovieResponseData>
+        ) => {
+          favoriteMovieEntityAdapter.setAll(state, results);
+          state.page = page;
+          state.totalPages = totalPages;
+          state.status = loadingStatuses.success;
+        }
+      )
       .addCase(fetchFavoriteMovies.rejected, (state, action) => {
         state.status =
           action.payload === loadingStatuses.earlyAdded

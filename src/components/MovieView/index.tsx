@@ -7,10 +7,20 @@ import { ETypeView } from "@constants/typeView";
 import { useAppSelector } from "@store/hooks";
 import { IMovieViewProps } from "./types";
 import { selectFilterCurrentTypeView } from "@store/filter/selectors";
+import { PaginationWrapper } from "./styles";
 
-const MovieView = ({ movies }: IMovieViewProps) => {
+const MovieView = ({
+  movies,
+  currentPage,
+  totalPages,
+  onPageChange,
+}: IMovieViewProps) => {
   const { t } = useTranslation();
   const movieTypeView = useAppSelector(selectFilterCurrentTypeView);
+
+  const handlePageChange = (_: React.ChangeEvent<unknown>, page: number) => {
+    onPageChange(page);
+  };
 
   if (!movies.length) {
     return <Message text={t("error.data.noData")} />;
@@ -21,6 +31,15 @@ const MovieView = ({ movies }: IMovieViewProps) => {
       {movieTypeView === ETypeView.list && <MovieViewList movies={movies} />}
       {movieTypeView === ETypeView.module && (
         <MovieViewModule movies={movies} />
+      )}
+      {movieTypeView && (
+        <PaginationWrapper
+          count={totalPages}
+          page={currentPage}
+          onChange={handlePageChange}
+          boundaryCount={1}
+          siblingCount={5}
+        />
       )}
     </>
   );
