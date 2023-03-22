@@ -6,24 +6,26 @@ import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { selectGenreIsLoading } from "@store/genre/selectors";
 import { fetchGenres } from "@store/genre/thunks";
 import { WrappedContainer } from "./styles";
+import { useTranslation } from "react-i18next";
 
 const SelectGenre = () => {
+  const { t, i18n } = useTranslation("favorite-movie-page");
   const dispatch = useAppDispatch();
   const isGenreLoading = useAppSelector(selectGenreIsLoading);
 
   useEffect(() => {
     dispatch(fetchGenres());
-  }, []);
+  }, [i18n.resolvedLanguage]);
 
   if (isGenreLoading) {
-    return <Preloader message="Загрузка данных..." />;
+    return <Preloader message={t("loadingStatuses.genres")} />;
   }
 
   return (
     <Paper>
       <WrappedContainer>
         <Typography variant="h5" component="p">
-          Выберите ваш любимый жанр
+          {t("title.genres")}
         </Typography>
         <GenreList />
       </WrappedContainer>

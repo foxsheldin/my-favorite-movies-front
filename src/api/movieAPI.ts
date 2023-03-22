@@ -1,5 +1,6 @@
 import axios, { AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { camelizeKeys, decamelizeKeys } from "humps";
+import i18next from "i18next";
 import {
   IFavoriteMovieData,
   IFavoriteMovieResponseData,
@@ -12,7 +13,6 @@ const instance = axios.create({
   baseURL: BASE_DB_URL,
   params: {
     apiKey: process.env.REACT_APP_MOVIE_DB_API_KEY,
-    language: "ru",
   },
 });
 
@@ -44,7 +44,11 @@ instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 
 export const movieAPI = {
   getGenre() {
-    return instance.get<IGenreResponseData>("genre/movie/list");
+    return instance.get<IGenreResponseData>("genre/movie/list", {
+      params: {
+        language: i18next.resolvedLanguage,
+      },
+    });
   },
   getFavoriteGenre() {
     return new Promise<number[]>((resolve, reject) => {

@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import AuthForm from "@components/AuthForm";
-import { WrappedContainer } from "./styles";
+import ChangeLanguageButton from "@components/ChangeLanguageButton";
 import logo from "@images/movie-logo.webp";
+import { WrappedContainer } from "./styles";
 import { backendData } from "temp/backendData";
 
 const AuthPage = () => {
@@ -22,6 +23,7 @@ const AuthPage = () => {
     <WrappedContainer>
       <img src={logo} width={150} height={150} />
       <AuthForm />
+      <ChangeLanguageButton />
     </WrappedContainer>
   );
 };

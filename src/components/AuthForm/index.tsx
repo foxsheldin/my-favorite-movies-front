@@ -1,8 +1,9 @@
-import { Field, Form } from "react-final-form";
 import React, { useEffect, useState } from "react";
+import { Field, Form } from "react-final-form";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Button } from "@mui/material";
 import { IAuthFormData } from "./types";
-import { useNavigate } from "react-router-dom";
 import {
   TextFieldSizeWrapper,
   CustomizedTypography,
@@ -17,6 +18,8 @@ import {
 } from "./helpers";
 
 const AuthForm = () => {
+  const { t } = useTranslation();
+
   const [authError, setAuthError] = useState<string | null>(null);
   const navigate = useNavigate();
 
@@ -35,7 +38,7 @@ const AuthForm = () => {
       localStorage.setItem("DB_auth_user", data.username);
       navigate("/panel");
     } else {
-      setAuthError("Неверный логин или пароль");
+      setAuthError(t("error.authorization.wrongLoginOrPassword"));
     }
   };
 
@@ -60,7 +63,7 @@ const AuthForm = () => {
               render={({ input, meta }) => (
                 <TextFieldSizeWrapper
                   {...input}
-                  label="Имя пользователя или e-mail"
+                  label={t("authorization.login")}
                   error={meta.touched && !!meta.error}
                   helperText={meta.touched && meta.error}
                 />
@@ -73,14 +76,14 @@ const AuthForm = () => {
                 <TextFieldSizeWrapper
                   {...input}
                   type="password"
-                  label="Пароль"
+                  label={t("authorization.password")}
                   error={meta.touched && !!meta.error}
                   helperText={meta.touched && meta.error}
                 />
               )}
             />
             <Button variant="contained" type="submit">
-              Войти
+              {t("authorization.signIn")}
             </Button>
           </WrappedPaper>
         </form>

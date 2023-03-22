@@ -1,22 +1,27 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import CssBaseline from "@mui/material/CssBaseline";
-import App from "./App";
 import { ThemeProvider } from "@mui/material";
-import { theme } from "./theme";
 import { Provider } from "react-redux";
+import App from "./App";
+import "@utils/i18next";
+import { theme } from "./theme";
 import store from "./store";
+import Preloader from "@components/Preloader";
+import i18next from "i18next";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <App />
-      </ThemeProvider>
-    </Provider>
+    <Suspense fallback={<Preloader message={"Loading..."} />}>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <App />
+        </ThemeProvider>
+      </Provider>
+    </Suspense>
   </React.StrictMode>
 );

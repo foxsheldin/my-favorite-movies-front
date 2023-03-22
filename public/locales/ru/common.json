@@ -1,0 +1,44 @@
+{
+  "navBar": {
+    "serviceName": "Мои избранные фильмы",
+    "greetings": "Привет, {{username}}!",
+    "logoutButton": "Выйти"
+  },
+  "movie": {
+    "tableHeader": {
+      "title": "Название фильма",
+      "description": "Описание",
+      "action": "Действия"
+    },
+    "tableBody": {
+      "posterTitle": "Постер фильма \"{{movieTitle}}\""
+    },
+    "action": {
+      "watched": "Просмотрено",
+      "addFavorite": "Добавить в избранное",
+      "removeFavorite": "Удалить из избранного"
+    }
+  },
+  "authorization": {
+    "login": "Имя пользователя или e-mail",
+    "password": "Пароль",
+    "signIn": "Войти"
+  },
+  "loadingStatuses": {
+    "inProgress": "Загрузка данных..."
+  },
+  "error": {
+    "validate": {
+      "required": "Заполните поле",
+      "minLength8": "Минимум 8 символов",
+      "minLength3": "Минимум 3 символов",
+      "forbiddenСharacters": "Нельзя использовать пробел, более одного знака точки(.) и символы !#$%&~=,'"
+    },
+    "authorization": {
+      "wrongLoginOrPassword": "Неверный логин или пароль"
+    },
+    "data": {
+      "noData": "Нет данных"
+    }
+  }
+}

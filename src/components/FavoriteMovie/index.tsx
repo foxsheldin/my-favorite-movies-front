@@ -10,8 +10,10 @@ import {
 import { WrappedDiv } from "./styles";
 import MovieView from "@components/MovieView";
 import MovieViewFilter from "@components/MovieViewFilter";
+import { useTranslation } from "react-i18next";
 
 const FavoriteMovie = () => {
+  const { t, i18n } = useTranslation("favorite-movie-page");
   const dispatch = useAppDispatch();
 
   const favoriteMoviesData = useAppSelector(selectFavoriteMovieArrayEntities);
@@ -19,10 +21,10 @@ const FavoriteMovie = () => {
 
   useEffect(() => {
     dispatch(fetchFavoriteMovies());
-  }, []);
+  }, [i18n.resolvedLanguage]);
 
   if (isFavoriteMovieLoading) {
-    return <Preloader message="Загрузка избранных фильмов..." />;
+    return <Preloader message={t("loadingStatuses.movies")} />;
   }
 
   return (
@@ -31,10 +33,10 @@ const FavoriteMovie = () => {
         <Container>
           <WrappedDiv>
             <Typography variant="h5" component="p">
-              Ваши избранные фильмы
+              {t("title.movies")}
             </Typography>
             <div>
-              <Button>Добавить</Button>
+              <Button>{t("title.addFavoriteButton")}</Button>
               {!!favoriteMoviesData.length && <MovieViewFilter />}
             </div>
           </WrappedDiv>

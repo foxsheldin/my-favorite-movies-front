@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import ClearIcon from "@mui/icons-material/Clear";
 import StarIcon from "@mui/icons-material/Star";
@@ -11,12 +12,15 @@ import {
 } from "@store/favoriteMovie/thunks";
 
 const MovieAction = ({ movie }: IMovieActionProps) => {
+  const { t } = useTranslation("common", {
+    keyPrefix: "movie.action",
+  });
   const dispatch = useAppDispatch();
 
   return (
     <div>
       <TooltipIconButton
-        title="Просмотрено"
+        title={t("watched")}
         color={movie.userWatched ? "primary" : "default"}
         onClick={
           movie?.userFavorite
@@ -27,9 +31,7 @@ const MovieAction = ({ movie }: IMovieActionProps) => {
         <VisibilityIcon />
       </TooltipIconButton>
       <TooltipIconButton
-        title={
-          movie.userFavorite ? "Удалить из избранного" : "Добавить в избранное"
-        }
+        title={movie.userFavorite ? t("removeFavorite") : t("addFavorite")}
         onClick={() => dispatch(updateFavoriteMovie(movie))}
       >
         {movie.userFavorite ? <ClearIcon /> : <StarIcon color="primary" />}

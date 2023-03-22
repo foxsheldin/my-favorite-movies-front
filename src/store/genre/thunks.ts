@@ -1,16 +1,25 @@
+import { selectFilterCurrentLanguage } from "./../filter/selectors";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { movieAPI } from "@api/movieAPI";
 import { loadingStatuses } from "@constants/loadingStatuses";
 import { selectGenreIds, selectSelectedGenresArray } from "./selectors";
 import { RootState } from "..";
 import { genreSlice } from ".";
+import i18next from "i18next";
+import { filterSlice } from "@store/filter";
 
 export const fetchGenres = createAsyncThunk(
   "genre/fetchGenres",
   async (_, thunkAPI) => {
-    if (selectGenreIds(thunkAPI.getState() as RootState).length > 0) {
+    const state: RootState = thunkAPI.getState() as RootState;
+
+    if (
+      selectFilterCurrentLanguage(state) === i18next.resolvedLanguage &&
+      selectGenreIds(state).length > 0
+    ) {
       return thunkAPI.rejectWithValue(loadingStatuses.earlyAdded);
     }
+    filterSlice.actions.updateCurrentLanguage(i18next.resolvedLanguage);
 
     const [responseGenre, responseFavoriteGenre] = await Promise.all([
       movieAPI.getGenre(),

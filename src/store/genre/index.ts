@@ -36,7 +36,7 @@ export const genreSlice = createSlice({
         state.status = loadingStatuses.inProgress;
       })
       .addCase(fetchGenres.fulfilled, (state, action) => {
-        genreEntityAdapter.addMany(state, action.payload);
+        genreEntityAdapter.setAll(state, action.payload);
         state.status = loadingStatuses.success;
       })
       .addCase(fetchGenres.rejected, (state, action) => {
