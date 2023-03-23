@@ -41,9 +41,9 @@ const FavoriteMovie = () => {
               {t("title.movies")}
             </Typography>
             <div>
-              <NavLink to="movie/add">
-                <Button>{t("title.addFavoriteButton")}</Button>
-              </NavLink>
+              <Button component={NavLink} to="movie/add">
+                {t("title.addFavoriteButton")}
+              </Button>
               {!!favoriteMoviesData.length && <MovieViewFilter />}
             </div>
           </WrappedDiv>

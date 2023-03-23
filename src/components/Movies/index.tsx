@@ -50,9 +50,9 @@ const Movies = () => {
               {t("title.movies")}
             </Typography>
             <div>
-              <NavLink to="/panel">
-                <Button>{t("title.backToFavoriteMovies")}</Button>
-              </NavLink>
+              <Button component={NavLink} to="/panel">
+                {t("title.backToFavoriteMovies")}
+              </Button>
               {!!moviesData.length && <MovieViewFilter />}
             </div>
           </WrappedDiv>
