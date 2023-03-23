@@ -8,6 +8,7 @@ import {
 import { IGenreResponseData } from "@store/genre/types";
 import { IMovieResponseData } from "@store/movie/types";
 import { BASE_DB_URL } from "./constants";
+import { IGetMoviesListProps } from "./movieAPI.types";
 
 const instance = axios.create({
   baseURL: BASE_DB_URL,
@@ -58,11 +59,19 @@ export const movieAPI = {
       resolve(favoriteGenres);
     });
   },
-  getMoviesList(genre: number[], page: number = 1) {
+  getMoviesList({
+    selectedGenres,
+    page = 1,
+    popalarity,
+    releaseYear,
+  }: IGetMoviesListProps) {
     return instance.get<IMovieResponseData>("discover/movie", {
       params: {
         language: i18next.resolvedLanguage,
-        withGenres: genre.join(","),
+        withGenres: selectedGenres.join(","),
+        year: releaseYear,
+        "vote_average.gte": popalarity[0],
+        "vote_average.lte": popalarity[1],
         page,
       },
     });

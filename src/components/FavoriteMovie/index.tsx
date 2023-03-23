@@ -13,6 +13,7 @@ import {
 import { WrappedDiv } from "./styles";
 import MovieView from "@components/MovieView";
 import MovieViewFilter from "@components/MovieViewFilter";
+import { NavLink } from "react-router-dom";
 
 const FavoriteMovie = () => {
   const { t, i18n } = useTranslation("favorite-movie-page");
@@ -40,7 +41,9 @@ const FavoriteMovie = () => {
               {t("title.movies")}
             </Typography>
             <div>
-              <Button>{t("title.addFavoriteButton")}</Button>
+              <NavLink to="movie/add">
+                <Button>{t("title.addFavoriteButton")}</Button>
+              </NavLink>
               {!!favoriteMoviesData.length && <MovieViewFilter />}
             </div>
           </WrappedDiv>

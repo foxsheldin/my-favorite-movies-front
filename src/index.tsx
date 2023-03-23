@@ -8,7 +8,6 @@ import "@utils/i18next";
 import { theme } from "./theme";
 import store from "./store";
 import Preloader from "@components/Preloader";
-import i18next from "i18next";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

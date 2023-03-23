@@ -4,6 +4,12 @@
     "greetings": "Hello, {{username}}!",
     "logoutButton": "Log out"
   },
+  "filters": {
+    "genres": "Genres",
+    "popularity": "Popularity",
+    "releaseYear": "Release year",
+    "allYears": "All years"
+  },
   "movie": {
     "tableHeader": {
       "title": "Movie title",
