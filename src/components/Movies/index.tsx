@@ -19,6 +19,7 @@ import {
   selectFilterReleaseYear,
   selectFilterSelectedMovieGenres,
 } from "@store/filter/selectors";
+import { fetchFavoriteMovieIds } from "@store/favoriteMovie/thunks";
 
 const Movies = () => {
   const { t, i18n } = useTranslation("add-movie-page");
@@ -32,6 +33,10 @@ const Movies = () => {
   const isMovieLoading = useAppSelector(selectMovieIsLoading);
   const currentPage = useAppSelector(selectMovieCurrentPage);
   const totalPages = useAppSelector(selectMovieTotalPages);
+
+  useEffect(() => {
+    dispatch(fetchFavoriteMovieIds());
+  }, []);
 
   useEffect(() => {
     dispatch(fetchMovies({ page: 1 }));

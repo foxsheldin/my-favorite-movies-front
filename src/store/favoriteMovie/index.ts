@@ -9,7 +9,11 @@ import {
   IFavoriteMovieAdditionalInitialState,
   IFavoriteMovieResponseData,
 } from "./types";
-import { fetchFavoriteMovies, updateFavoriteMovie } from "./thunks";
+import {
+  fetchFavoriteMovieIds,
+  fetchFavoriteMovies,
+  updateFavoriteMovie,
+} from "./thunks";
 
 const favoriteMovieEntityAdapter = createEntityAdapter<IFavoriteMovieData>();
 
@@ -48,6 +52,19 @@ export const favoriteMovieSlice = createSlice({
         }
       )
       .addCase(fetchFavoriteMovies.rejected, (state, action) => {
+        state.status =
+          action.payload === loadingStatuses.earlyAdded
+            ? loadingStatuses.success
+            : loadingStatuses.failed;
+      })
+      .addCase(fetchFavoriteMovieIds.pending, (state) => {
+        state.status = loadingStatuses.inProgress;
+      })
+      .addCase(fetchFavoriteMovieIds.fulfilled, (state, action) => {
+        state.ids = action.payload;
+        state.status = loadingStatuses.success;
+      })
+      .addCase(fetchFavoriteMovieIds.rejected, (state, action) => {
         state.status =
           action.payload === loadingStatuses.earlyAdded
             ? loadingStatuses.success

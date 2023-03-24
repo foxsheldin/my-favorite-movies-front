@@ -32,7 +32,14 @@ export const movieSlice = createSlice({
             payload: { results, page, totalPages },
           }: PayloadAction<IMovieResponseData>
         ) => {
-          movieEntityAdapter.setAll(state, results);
+          movieEntityAdapter.setAll(
+            state,
+            results.map((movie) => ({
+              ...movie,
+              userFavorite: false,
+              userWatched: false,
+            }))
+          );
           state.page = page;
           state.totalPages = totalPages;
           state.status = loadingStatuses.success;

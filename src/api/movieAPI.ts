@@ -90,6 +90,14 @@ export const movieAPI = {
       resolve(result);
     });
   },
+  getFavoriteMovieIds() {
+    return new Promise<number[]>((resolve, reject) => {
+      const favoriteMovies: IFavoriteMovieData[] = JSON.parse(
+        localStorage.getItem("DB_user_favorite_movies") as string
+      );
+      resolve(favoriteMovies.map((movie) => movie.id));
+    });
+  },
   updateSelectedGenres(selectedGenres: number[]) {
     return new Promise<number[]>((resolve, reject) => {
       const result: number[] = JSON.parse(
@@ -110,7 +118,7 @@ export const movieAPI = {
         localStorage.getItem("DB_user_favorite_movies") as string
       );
 
-      const result = [...tempObject, movieData];
+      const result = [...tempObject, { ...movieData, userFavorite: true }];
 
       localStorage.setItem("DB_user_favorite_movies", JSON.stringify(result));
 
@@ -137,18 +145,19 @@ export const movieAPI = {
         localStorage.getItem("DB_user_favorite_movies") as string
       );
 
-      const result = tempObject.find(
+      const result = tempObject.findIndex(
         (item: IFavoriteMovieData) => item.id === movieId
       );
-      if (result) {
-        result.userWatched = !result?.userWatched;
+
+      if (result >= 0) {
+        tempObject[result].userWatched = !tempObject[result].userWatched;
 
         localStorage.setItem(
           "DB_user_favorite_movies",
-          JSON.stringify([...tempObject, result])
+          JSON.stringify(tempObject)
         );
 
-        resolve(result);
+        resolve(tempObject[result]);
       } else {
         reject("");
       }

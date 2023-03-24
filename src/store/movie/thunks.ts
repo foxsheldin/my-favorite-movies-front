@@ -23,8 +23,6 @@ export const fetchMovies = createAsyncThunk(
     const popalarity: number[] = selectFilterPopularity(state);
     const releaseYear: number = selectFilterReleaseYear(state);
 
-    console.log(selectedGenres, popalarity, releaseYear);
-
     const response = await movieAPI.getMoviesList({
       selectedGenres,
       page,
