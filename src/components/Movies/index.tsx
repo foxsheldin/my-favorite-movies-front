@@ -1,38 +1,24 @@
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import Preloader from "@components/Preloader";
-import { useAppDispatch, useAppSelector } from "@store/hooks";
-import {
-  selectMovieArrayEntities,
-  selectMovieCurrentPage,
-  selectMovieIsLoading,
-  selectMovieTotalPages,
-} from "@store/movie/selectors";
+import { useAppDispatch } from "@store/hooks";
 import { fetchMovies } from "@store/movie/thunks";
 import { Button, Container, Paper, Typography } from "@mui/material";
 import { WrappedDiv } from "./styles";
 import { NavLink } from "react-router-dom";
 import MovieViewFilter from "@components/MovieViewFilter";
 import MovieView from "@components/MovieView";
-import {
-  selectFilterPopularity,
-  selectFilterReleaseYear,
-  selectFilterSelectedMovieGenres,
-} from "@store/filter/selectors";
 import { fetchFavoriteMovieIds } from "@store/favoriteMovie/thunks";
+import { useMovieSlice } from "./hooks/use-movie-slice";
+import { useFilterSlice } from "./hooks/use-filter-slice";
 
 const Movies = () => {
   const { t, i18n } = useTranslation("add-movie-page");
   const dispatch = useAppDispatch();
 
-  const selectedGenres = useAppSelector(selectFilterSelectedMovieGenres);
-  const popularity = useAppSelector(selectFilterPopularity);
-  const releaseYear = useAppSelector(selectFilterReleaseYear);
-
-  const moviesData = useAppSelector(selectMovieArrayEntities);
-  const isMovieLoading = useAppSelector(selectMovieIsLoading);
-  const currentPage = useAppSelector(selectMovieCurrentPage);
-  const totalPages = useAppSelector(selectMovieTotalPages);
+  const { moviesData, isMovieLoading, currentPage, totalPages } =
+    useMovieSlice();
+  const { selectedGenres, popularity, releaseYear } = useFilterSlice();
 
   useEffect(() => {
     dispatch(fetchFavoriteMovieIds());
