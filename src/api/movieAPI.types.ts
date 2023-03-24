@@ -1,6 +1,6 @@
 export interface IGetMoviesListProps {
   page: number;
   selectedGenres: number[];
-  popalarity: number[];
+  popularity: number[];
   releaseYear?: number;
 }

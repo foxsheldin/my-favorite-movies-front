@@ -6,7 +6,7 @@ import { filterSlice } from "@store/filter";
 import { MIN_POPULARITY_VALUE } from "./constants";
 import { MAX_POPULARITY_VALUE } from "@store/filter/constants";
 import { selectFilterPopularity } from "@store/filter/selectors";
-import { arrayIsEquel } from "@helpers/arrayIsEquel";
+import { arrayIsEqual } from "@helpers/arrayIsEqual";
 
 const RangeMoviePopularity = () => {
   const { t } = useTranslation();
@@ -16,7 +16,7 @@ const RangeMoviePopularity = () => {
   const sliderThumbChangeHandler = (_: Event, value: number | number[]) => {
     if (typeof value === "number") {
       dispatch(filterSlice.actions.setPopularity([value, value]));
-    } else if (!arrayIsEquel(popularity, value)) {
+    } else if (!arrayIsEqual(popularity, value)) {
       dispatch(filterSlice.actions.setPopularity(value));
     }
   };

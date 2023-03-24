@@ -12,7 +12,7 @@ import { filterSlice } from "@store/filter";
 
 export const fetchMovies = createAsyncThunk(
   "movie/fetchMovies",
-  async ({ page }: { page: number }, thunkAPI) => {
+  async ({ page = 1 }: { page?: number }, thunkAPI) => {
     const state: RootState = thunkAPI.getState() as RootState;
 
     if (selectFilterCurrentLanguage(state) !== i18next.resolvedLanguage) {
@@ -20,13 +20,13 @@ export const fetchMovies = createAsyncThunk(
     }
 
     const selectedGenres: number[] = selectFilterSelectedMovieGenres(state);
-    const popalarity: number[] = selectFilterPopularity(state);
+    const popularity: number[] = selectFilterPopularity(state);
     const releaseYear: number = selectFilterReleaseYear(state);
 
     const response = await movieAPI.getMoviesList({
       selectedGenres,
       page,
-      popalarity,
+      popularity,
       releaseYear: releaseYear ? releaseYear : undefined,
     });
     return response.data;

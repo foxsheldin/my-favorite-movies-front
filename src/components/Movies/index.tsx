@@ -39,7 +39,7 @@ const Movies = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(fetchMovies({ page: 1 }));
+    dispatch(fetchMovies({}));
   }, [i18n.resolvedLanguage, selectedGenres, popularity, releaseYear]);
 
   if (isMovieLoading) {

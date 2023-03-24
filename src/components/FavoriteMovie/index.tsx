@@ -25,7 +25,7 @@ const FavoriteMovie = () => {
   const totalPages = useAppSelector(selectFavoriteMovieTotalPages);
 
   useEffect(() => {
-    dispatch(fetchFavoriteMovies({ page: 1 }));
+    dispatch(fetchFavoriteMovies({}));
   }, [i18n.resolvedLanguage]);
 
   if (isFavoriteMovieLoading) {

@@ -62,7 +62,7 @@ export const movieAPI = {
   getMoviesList({
     selectedGenres,
     page = 1,
-    popalarity,
+    popularity,
     releaseYear,
   }: IGetMoviesListProps) {
     return instance.get<IMovieResponseData>("discover/movie", {
@@ -70,8 +70,8 @@ export const movieAPI = {
         language: i18next.resolvedLanguage,
         withGenres: selectedGenres.join(","),
         year: releaseYear,
-        "vote_average.gte": popalarity[0],
-        "vote_average.lte": popalarity[1],
+        "vote_average.gte": popularity[0],
+        "vote_average.lte": popularity[1],
         page,
       },
     });
@@ -149,7 +149,7 @@ export const movieAPI = {
         (item: IFavoriteMovieData) => item.id === movieId
       );
 
-      if (result >= 0) {
+      if (~result) {
         tempObject[result].userWatched = !tempObject[result].userWatched;
 
         localStorage.setItem(
