@@ -1,0 +1,12 @@
+{
+  "title": {
+    "page": "Add movie",
+    "filters": "Movie search settings",
+    "movies": "Movies",
+    "backToFavoriteMovies": "Back to Favorite Movie"
+  },
+  "loadingStatuses": {
+    "movies": "Loading movies...",
+    "genres": "Loading genres..."
+  }
+}

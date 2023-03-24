@@ -4,14 +4,11 @@ import {
   PayloadAction,
 } from "@reduxjs/toolkit";
 import { loadingStatuses } from "@constants/loadingStatuses";
-import {
-  IMovieAdditionalInitialState,
-  IMovieData,
-  IMovieResponseData,
-} from "./types";
+import { IMovieAdditionalInitialState, IMovieResponseData } from "./types";
 import { fetchMovies } from "./thunks";
+import { IFavoriteMovieData } from "@store/favoriteMovie/types";
 
-const movieEntityAdapter = createEntityAdapter<IMovieData>();
+const movieEntityAdapter = createEntityAdapter<IFavoriteMovieData>();
 
 export const movieSlice = createSlice({
   name: "movie",
@@ -35,7 +32,14 @@ export const movieSlice = createSlice({
             payload: { results, page, totalPages },
           }: PayloadAction<IMovieResponseData>
         ) => {
-          movieEntityAdapter.setAll(state, results);
+          movieEntityAdapter.setAll(
+            state,
+            results.map((movie) => ({
+              ...movie,
+              userFavorite: false,
+              userWatched: false,
+            }))
+          );
           state.page = page;
           state.totalPages = totalPages;
           state.status = loadingStatuses.success;

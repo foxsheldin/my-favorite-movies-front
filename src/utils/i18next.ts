@@ -11,5 +11,5 @@ i18next
     debug: true,
     fallbackLng: "en",
     defaultNS: "common",
-    ns: ["common", "favorite-movie-page"],
+    ns: ["common", "add-favorite-page", "favorite-movie-page"],
   });

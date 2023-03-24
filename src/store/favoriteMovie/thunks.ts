@@ -6,12 +6,15 @@ import { selectFilterCurrentLanguage } from "@store/filter/selectors";
 import { filterSlice } from "@store/filter";
 import { favoriteMovieSlice } from ".";
 import { RootState } from "..";
-import { selectFavoriteMovieIsIncludesId } from "./selectors";
+import {
+  selectFavoriteMovieIds,
+  selectFavoriteMovieIsIncludesId,
+} from "./selectors";
 import { IFavoriteMovieData } from "./types";
 
 export const fetchFavoriteMovies = createAsyncThunk(
   "favoriteMovie/fetchFavoriteMovies",
-  async ({ page }: { page: number }, thunkAPI) => {
+  async ({ page = 1 }: { page?: number }, thunkAPI) => {
     const state: RootState = thunkAPI.getState() as RootState;
 
     if (selectFilterCurrentLanguage(state) !== i18next.resolvedLanguage) {
@@ -19,6 +22,18 @@ export const fetchFavoriteMovies = createAsyncThunk(
     }
 
     const response = await movieAPI.getFavoriteMovieList(page);
+    return response;
+  }
+);
+
+export const fetchFavoriteMovieIds = createAsyncThunk(
+  "favoriteMovie/fetchFavoriteMovieIds",
+  async (_, thunkAPI) => {
+    if (selectFavoriteMovieIds(thunkAPI.getState() as RootState).length > 0) {
+      return thunkAPI.rejectWithValue(loadingStatuses.earlyAdded);
+    }
+
+    const response = await movieAPI.getFavoriteMovieIds();
     return response;
   }
 );

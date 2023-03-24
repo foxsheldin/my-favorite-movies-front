@@ -4,6 +4,12 @@
     "greetings": "Привет, {{username}}!",
     "logoutButton": "Выйти"
   },
+  "filters": {
+    "genres": "Жанры",
+    "popularity": "Популярность",
+    "releaseYear": "Год выхода",
+    "allYears": "Все года"
+  },
   "movie": {
     "tableHeader": {
       "title": "Название фильма",

@@ -29,6 +29,9 @@ export const fetchGenres = createAsyncThunk(
     thunkAPI.dispatch(
       genreSlice.actions.setSelectedGenres(responseFavoriteGenre)
     );
+    thunkAPI.dispatch(
+      filterSlice.actions.setSelectedMovieGenres(responseFavoriteGenre)
+    );
 
     return responseGenre.data.genres;
   }

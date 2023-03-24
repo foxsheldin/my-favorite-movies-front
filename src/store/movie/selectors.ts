@@ -1,6 +1,7 @@
 import { EntityId } from "@reduxjs/toolkit";
 import { loadingStatuses } from "@constants/loadingStatuses";
 import { RootState } from "@store/index";
+import { IFavoriteMovieData } from "@store/favoriteMovie/types";
 
 export const selectMovieModuleState = (state: RootState) => state.movie;
 
@@ -17,7 +18,7 @@ export const selectMovieEntities = (state: RootState) =>
   selectMovieModuleState(state).entities;
 
 export const selectMovieArrayEntities = (state: RootState) =>
-  Object.values(selectMovieEntities(state));
+  Object.values(selectMovieEntities(state)) as IFavoriteMovieData[];
 
 export const selectMovieByMovieId = (
   state: RootState,

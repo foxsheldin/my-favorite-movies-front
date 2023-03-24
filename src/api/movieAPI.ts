@@ -8,6 +8,7 @@ import {
 import { IGenreResponseData } from "@store/genre/types";
 import { IMovieResponseData } from "@store/movie/types";
 import { BASE_DB_URL } from "./constants";
+import { IGetMoviesListProps } from "./movieAPI.types";
 
 const instance = axios.create({
   baseURL: BASE_DB_URL,
@@ -58,11 +59,19 @@ export const movieAPI = {
       resolve(favoriteGenres);
     });
   },
-  getMoviesList(genre: number[], page: number = 1) {
+  getMoviesList({
+    selectedGenres,
+    page = 1,
+    popularity,
+    releaseYear,
+  }: IGetMoviesListProps) {
     return instance.get<IMovieResponseData>("discover/movie", {
       params: {
         language: i18next.resolvedLanguage,
-        withGenres: genre.join(","),
+        withGenres: selectedGenres.join(","),
+        year: releaseYear,
+        "vote_average.gte": popularity[0],
+        "vote_average.lte": popularity[1],
         page,
       },
     });
@@ -79,6 +88,14 @@ export const movieAPI = {
         totalResults: favoriteMovies.length,
       };
       resolve(result);
+    });
+  },
+  getFavoriteMovieIds() {
+    return new Promise<number[]>((resolve, reject) => {
+      const favoriteMovies: IFavoriteMovieData[] = JSON.parse(
+        localStorage.getItem("DB_user_favorite_movies") as string
+      );
+      resolve(favoriteMovies.map((movie) => movie.id));
     });
   },
   updateSelectedGenres(selectedGenres: number[]) {
@@ -101,7 +118,7 @@ export const movieAPI = {
         localStorage.getItem("DB_user_favorite_movies") as string
       );
 
-      const result = [...tempObject, movieData];
+      const result = [...tempObject, { ...movieData, userFavorite: true }];
 
       localStorage.setItem("DB_user_favorite_movies", JSON.stringify(result));
 
@@ -128,18 +145,19 @@ export const movieAPI = {
         localStorage.getItem("DB_user_favorite_movies") as string
       );
 
-      const result = tempObject.find(
+      const result = tempObject.findIndex(
         (item: IFavoriteMovieData) => item.id === movieId
       );
-      if (result) {
-        result.userWatched = !result?.userWatched;
+
+      if (~result) {
+        tempObject[result].userWatched = !tempObject[result].userWatched;
 
         localStorage.setItem(
           "DB_user_favorite_movies",
-          JSON.stringify([...tempObject, result])
+          JSON.stringify(tempObject)
         );
 
-        resolve(result);
+        resolve(tempObject[result]);
       } else {
         reject("");
       }
