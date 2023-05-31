@@ -8,6 +8,8 @@ import "@utils/i18next";
 import { theme } from "./theme";
 import store from "./store";
 import Preloader from "@components/Preloader";
+import { ApolloProvider } from "@apollo/client";
+import { client } from "@api/graphql/client";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -15,12 +17,14 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Suspense fallback={<Preloader message={"Loading..."} />}>
-      <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <App />
-        </ThemeProvider>
-      </Provider>
+      <ApolloProvider client={client}>
+        <Provider store={store}>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <App />
+          </ThemeProvider>
+        </Provider>
+      </ApolloProvider>
     </Suspense>
   </React.StrictMode>
 );
