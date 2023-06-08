@@ -3,9 +3,14 @@ import { gql } from "@apollo/client";
 export const GET_FAVORITE_MOVIE_LIST = gql`
   query getFavoriteMovieList(
     $userId: String!
-    $params: GetFavoriteMovieListInput!
+    $page: Float
+    $limit: Float
+    $language: String
   ) {
-    getFavoriteMovieList(userId: $userId, params: $params) {
+    getFavoriteMovieList(
+      userId: $userId
+      params: { page: $page, limit: $limit, language: $language }
+    ) {
       page
       results {
         ...CommonMovieFields

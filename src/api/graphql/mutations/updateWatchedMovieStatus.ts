@@ -3,7 +3,7 @@ import { gql } from "@apollo/client";
 export const UPDATE_WATCHED_MOVIE_STATUS = gql`
   mutation updateWatchedMovieStatus(
     $userId: String!
-    $movieId: Int!
+    $movieId: Float!
     $status: Boolean!
   ) {
     updateWatchedMovieStatus(
