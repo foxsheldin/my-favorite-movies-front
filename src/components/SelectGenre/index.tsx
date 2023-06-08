@@ -2,29 +2,36 @@ import React, { useEffect } from "react";
 import { Paper, Typography } from "@mui/material";
 import GenreList from "@components/GenreList";
 import Preloader from "@components/Preloader";
-import { useAppDispatch, useAppSelector } from "@store/hooks";
-import {
-  selectGenreIsLoading,
-  selectSelectedGenresArray,
-} from "@store/genre/selectors";
-import { fetchGenres, updateSelectedGenres } from "@store/genre/thunks";
 import { WrappedContainer } from "./styles";
 import { useTranslation } from "react-i18next";
+import { useGetGenreList } from "@api/graphql/hooks/queries/useGetGenreList";
+import { useGetFavoriteGenresList } from "@api/graphql/hooks/queries/useGetFavoriteGenresList";
+import { useUpdateSelectedGenresMutation } from "@api/graphql/hooks/mutations/useUpdateSelectedGenresMutation";
 
 const SelectGenre = () => {
   const { t, i18n } = useTranslation("favorite-movie-page");
-  const dispatch = useAppDispatch();
-
-  const selectedGenres = useAppSelector(selectSelectedGenresArray);
-  const isGenreLoading = useAppSelector(selectGenreIsLoading);
+  const { genres, loading, refetch } = useGetGenreList();
+  const { favoriteGenresIds, updateQuery } = useGetFavoriteGenresList();
+  const { updateSelectedGenresMutation, data } =
+    useUpdateSelectedGenresMutation();
 
   useEffect(() => {
-    dispatch(fetchGenres());
+    refetch();
   }, [i18n.resolvedLanguage]);
 
-  if (isGenreLoading) {
+  useEffect(() => {
+    updateQuery(() => ({
+      getFavoriteGenresList: data?.updateSelectedGenres ?? favoriteGenresIds,
+    }));
+  }, [data]);
+
+  if (loading) {
     return <Preloader message={t("loadingStatuses.genres")} />;
   }
+
+  const updateSelectedGenres = (genreId: number) => {
+    updateSelectedGenresMutation(genreId);
+  };
 
   return (
     <Paper>
@@ -33,8 +40,9 @@ const SelectGenre = () => {
           {t("title.genres")}
         </Typography>
         <GenreList
-          selectedGenres={selectedGenres}
-          onItemClick={(id) => dispatch(updateSelectedGenres(id))}
+          genres={genres}
+          selectedGenres={favoriteGenresIds}
+          onItemClick={(id) => updateSelectedGenres(id)}
         />
       </WrappedContainer>
     </Paper>

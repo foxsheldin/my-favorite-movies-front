@@ -26,7 +26,7 @@
     }
   },
   "authorization": {
-    "login": "Username or E-mail",
+    "login": "E-mail",
     "password": "Password",
     "signIn": "Sign In"
   },

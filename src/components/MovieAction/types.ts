@@ -1,5 +1,5 @@
-import { IFavoriteMovieData } from "@store/favoriteMovie/types";
+import { IMovieData } from "@api/graphql/types/movie";
 
 export interface IMovieActionProps {
-  movie: IFavoriteMovieData;
+  movie: IMovieData;
 }

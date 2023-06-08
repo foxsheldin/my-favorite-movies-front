@@ -10,9 +10,9 @@ import { selectFilterCurrentTypeView } from "@store/filter/selectors";
 import { PaginationWrapper } from "./styles";
 
 const MovieView = ({
-  movies,
-  currentPage,
-  totalPages,
+  movies = [],
+  currentPage = 0,
+  totalPages = 0,
   onPageChange,
 }: IMovieViewProps) => {
   const { t } = useTranslation();

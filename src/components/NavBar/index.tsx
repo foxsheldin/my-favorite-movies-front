@@ -4,13 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { WrappedContainer, AccountWrapper, WrappedHeader } from "./styles";
 import ChangeLanguageButton from "@components/ChangeLanguageButton";
 import { useTranslation } from "react-i18next";
+import { useGetProfile } from "@api/graphql/hooks/queries/useGetProfile";
 
 const NavBar = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { profile } = useGetProfile();
 
   const onLogoutClick = () => {
-    localStorage.removeItem("DB_auth_user");
+    localStorage.removeItem("DB_user_id");
     navigate("/");
   };
 
@@ -24,7 +26,7 @@ const NavBar = () => {
           <ChangeLanguageButton />
           <Typography>
             {t("navBar.greetings", {
-              username: localStorage.getItem("DB_auth_user"),
+              username: profile?.email.split("@")[0],
             })}
           </Typography>
           <Button onClick={onLogoutClick}>{t("navBar.logoutButton")}</Button>
