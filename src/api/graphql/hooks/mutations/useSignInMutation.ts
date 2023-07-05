@@ -1,14 +1,14 @@
 import { useMutation } from "@apollo/client";
 import { SIGN_IN } from "@api/graphql/mutations/signIn";
 import {
-  ISignInMutationResponseData,
+  ISignInMutationData,
   ISignInMutationVariables,
   IUseSignInMutationResult,
 } from "@api/graphql/types/auth";
 
 export function useSignInMutation(): IUseSignInMutationResult {
   const [mutation, options] = useMutation<
-    ISignInMutationResponseData,
+    ISignInMutationData,
     ISignInMutationVariables
   >(SIGN_IN);
 

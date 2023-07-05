@@ -1,7 +1,17 @@
 import { FetchResult, MutationResult } from "@apollo/client";
 
-export interface ISignInMutationResponseData {
-  signIn: string;
+export interface PartialTypeUser {
+  id: string;
+  email: string;
+}
+
+export interface ISignInResponseData {
+  user: PartialTypeUser;
+  access_token: string;
+}
+
+export interface ISignInMutationData {
+  signIn: ISignInResponseData;
 }
 
 export interface ISignInMutationVariables {
@@ -10,19 +20,14 @@ export interface ISignInMutationVariables {
 }
 
 export interface IUseSignInMutationResult
-  extends MutationResult<ISignInMutationResponseData> {
+  extends MutationResult<ISignInMutationData> {
   signInMutation: (
     variables: ISignInMutationVariables
-  ) => Promise<FetchResult<ISignInMutationResponseData>>;
-}
-
-export interface ISignUpMutationResponse {
-  id: string;
-  email: string;
+  ) => Promise<FetchResult<ISignInMutationData>>;
 }
 
 export interface ISignUpMutationData {
-  signUp: ISignUpMutationResponse;
+  signUp: PartialTypeUser;
 }
 
 export interface ISignUpMutationVariables {

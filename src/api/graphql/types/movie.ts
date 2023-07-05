@@ -26,7 +26,6 @@ export interface IFavoriteMovieListQueryData {
 }
 
 export interface IFavoriteMovieListQueryVariables {
-  userId: string;
   page?: number;
   limit?: number;
   language?: string;
@@ -37,7 +36,6 @@ export interface ICreateFavoriteMovieMutationResponseData {
 }
 
 export interface ICreateFavoriteMovieMutationVariables {
-  userId: string;
   movieId: number;
   language: string;
 }
@@ -54,7 +52,6 @@ export interface IDeleteFavoriteMovieMutationResponseData {
 }
 
 export interface IDeleteFavoriteMovieMutationVariables {
-  userId: string;
   movieId: number;
 }
 
@@ -75,7 +72,6 @@ export interface IUpdateWatchedMovieStatusMutationResponseData {
 }
 
 export interface IUpdateWatchedMovieStatusMutationVariables {
-  userId: string;
   movieId: number;
   status: boolean;
 }
@@ -93,7 +89,6 @@ export interface IAllAvailableMovieListQueryData {
 }
 
 export interface IAllAvailableMovieListQueryVariables {
-  userId: string;
   language?: string;
   page?: number;
   selectedGenresIds?: number[];

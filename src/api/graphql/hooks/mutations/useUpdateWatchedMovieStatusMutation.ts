@@ -21,7 +21,6 @@ export function useUpdateWatchedMovieStatusMutation(): IUseUpdateWatchedMovieSta
       variables: {
         movieId,
         status,
-        userId: localStorage.getItem("DB_user_id") ?? "",
       },
     });
   };

@@ -20,7 +20,6 @@ export function useCreateFavoriteMovieMutation(): IUseCreateFavoriteMovieMutatio
       variables: {
         movieId,
         language: i18n.resolvedLanguage,
-        userId: localStorage.getItem("DB_user_id") ?? "",
       },
     });
   };

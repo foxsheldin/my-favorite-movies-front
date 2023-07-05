@@ -18,7 +18,6 @@ export const useGetFavoriteMovieList = () => {
       page: 1,
       limit: PAGE_LIMIT,
       language: i18n.resolvedLanguage,
-      userId: localStorage.getItem("DB_user_id") ?? "",
     },
     fetchPolicy: "cache-and-network",
   });

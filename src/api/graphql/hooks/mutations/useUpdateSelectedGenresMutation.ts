@@ -15,7 +15,7 @@ export function useUpdateSelectedGenresMutation(): IUseUpdateSelectedGenresMutat
 
   const updateSelectedGenresMutation = async (genreId: number) => {
     await mutation({
-      variables: { genreId, userId: localStorage.getItem("DB_user_id") ?? "" },
+      variables: { genreId },
     });
   };
 

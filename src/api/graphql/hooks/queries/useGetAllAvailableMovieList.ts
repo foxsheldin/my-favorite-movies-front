@@ -28,7 +28,6 @@ export const useGetAllAvailableMovieList = () => {
       releaseYear,
       selectedGenresIds,
       language: i18n.resolvedLanguage,
-      userId: localStorage.getItem("DB_user_id") ?? "",
     },
     fetchPolicy: "cache-and-network",
   });

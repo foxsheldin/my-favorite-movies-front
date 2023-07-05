@@ -1,17 +1,11 @@
 import { GET_FAVORITE_GENRES_LIST } from "@api/graphql/queries/getFavoriteGenresList";
-import {
-  IFavoriteGenresListQueryData,
-  IFavoriteGenresListQueryVariables,
-} from "@api/graphql/types/genre";
+import { IFavoriteGenresListQueryData } from "@api/graphql/types/genre";
 import { useQuery } from "@apollo/client";
 
 export const useGetFavoriteGenresList = () => {
-  const { data, ...otherOptions } = useQuery<
-    IFavoriteGenresListQueryData,
-    IFavoriteGenresListQueryVariables
-  >(GET_FAVORITE_GENRES_LIST, {
-    variables: { userId: localStorage.getItem("DB_user_id") ?? "" },
-  });
+  const { data, ...otherOptions } = useQuery<IFavoriteGenresListQueryData>(
+    GET_FAVORITE_GENRES_LIST
+  );
 
   return {
     favoriteGenresIds: data?.getFavoriteGenresList ?? [],

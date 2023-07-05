@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const GET_FAVORITE_GENRES_LIST = gql`
-  query getFavoriteGenresList($userId: String!) {
-    getFavoriteGenresList(userId: $userId)
+  query getFavoriteGenresList {
+    getFavoriteGenresList
   }
 `;

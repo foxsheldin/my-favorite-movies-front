@@ -9,7 +9,3 @@ export interface IProfile {
 export interface IGetProfileQueryData {
   getProfile: IProfile;
 }
-
-export interface IGetProfileQueryVariables {
-  userId: string;
-}

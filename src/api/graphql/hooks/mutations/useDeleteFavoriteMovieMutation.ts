@@ -15,7 +15,7 @@ export function useDeleteFavoriteMovieMutation(): IUseDeleteFavoriteMovieMutatio
 
   const deleteFavoriteMovieMutation = async (movieId: number) => {
     return await mutation({
-      variables: { movieId, userId: localStorage.getItem("DB_user_id") ?? "" },
+      variables: { movieId },
     });
   };
 

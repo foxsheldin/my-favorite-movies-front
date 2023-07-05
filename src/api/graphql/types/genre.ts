@@ -14,7 +14,6 @@ export interface IUpdateSelectedGenresResponseData {
 }
 
 export interface IUpdateSelectedGenresMutationVariables {
-  userId: string;
   genreId: number;
 }
 
@@ -33,8 +32,4 @@ export interface IUseUpdateSelectedGenresMutationResult
 
 export interface IFavoriteGenresListQueryData {
   getFavoriteGenresList: number[];
-}
-
-export interface IFavoriteGenresListQueryVariables {
-  userId: string;
 }
