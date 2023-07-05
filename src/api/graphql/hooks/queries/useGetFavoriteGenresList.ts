@@ -4,7 +4,8 @@ import { useQuery } from "@apollo/client";
 
 export const useGetFavoriteGenresList = () => {
   const { data, ...otherOptions } = useQuery<IFavoriteGenresListQueryData>(
-    GET_FAVORITE_GENRES_LIST
+    GET_FAVORITE_GENRES_LIST,
+    { fetchPolicy: "cache-and-network" }
   );
 
   return {
