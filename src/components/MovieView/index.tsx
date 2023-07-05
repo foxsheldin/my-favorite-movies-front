@@ -22,7 +22,7 @@ const MovieView = ({
     onPageChange(page);
   };
 
-  if (!movies.length) {
+  if (!movies?.length) {
     return <Message text={t("error.data.noData")} />;
   }
 

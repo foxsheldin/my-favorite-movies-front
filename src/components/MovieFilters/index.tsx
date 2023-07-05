@@ -24,7 +24,8 @@ const MovieFilters = () => {
   }, [i18n.resolvedLanguage]);
 
   useEffect(() => {
-    dispatch(filterSlice.actions.setSelectedMovieGenres(favoriteGenresIds));
+    if (favoriteGenresIds?.length !== 0)
+      dispatch(filterSlice.actions.setSelectedMovieGenres(favoriteGenresIds));
   }, [favoriteGenresIds]);
 
   if (loading) {

@@ -8,8 +8,7 @@ i18next
   .use(I18nextBrowserLanguageDetector)
   .use(initReactI18next)
   .init({
-    debug: true,
     fallbackLng: "en",
     defaultNS: "common",
-    ns: ["common", "add-favorite-page", "favorite-movie-page"],
+    ns: ["common", "add-movie-page", "favorite-movie-page"],
   });

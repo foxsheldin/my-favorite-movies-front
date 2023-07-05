@@ -32,7 +32,7 @@ const FavoriteMovie = () => {
               <Button component={NavLink} to="movie/add">
                 {t("title.addFavoriteButton")}
               </Button>
-              {!!favoriteMovieList?.results.length && <MovieViewFilter />}
+              {!!favoriteMovieList?.results?.length && <MovieViewFilter />}
             </div>
           </WrappedDiv>
         </Container>
