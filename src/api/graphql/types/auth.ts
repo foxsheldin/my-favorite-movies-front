@@ -34,3 +34,12 @@ export interface ISignUpMutationVariables {
   email: string;
   password: string;
 }
+
+export interface ILogoutMutationData {
+  logout: boolean;
+}
+
+export interface IUseLogoutMutationResult
+  extends MutationResult<ILogoutMutationData> {
+  logoutMutation: () => Promise<FetchResult<ILogoutMutationData>>;
+}

@@ -27,7 +27,7 @@ const AuthForm = () => {
   const { signInMutation, loading, error } = useSignInMutation();
 
   useEffect(() => {
-    if (localStorage.getItem("DB_user_id")) {
+    if (localStorage.getItem("access_token")) {
       navigate("/panel");
     }
   }, [localStorage]);
@@ -36,7 +36,10 @@ const AuthForm = () => {
     try {
       setAuthError(undefined);
       const response = await signInMutation(formData);
-      localStorage.setItem("DB_user_id", response.data?.signIn ?? "");
+      localStorage.setItem(
+        "access_token",
+        response.data?.signIn.access_token ?? ""
+      );
       navigate("/panel");
     } catch {
       setAuthError(error?.graphQLErrors);
