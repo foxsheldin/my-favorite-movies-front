@@ -13,15 +13,9 @@ export function useUpdateWatchedMovieStatusMutation(): IUseUpdateWatchedMovieSta
     IUpdateWatchedMovieStatusMutationVariables
   >(UPDATE_WATCHED_MOVIE_STATUS);
 
-  const updateWatchedMovieStatusMutation = async (
-    movieId: number,
-    status: boolean
-  ) => {
+  const updateWatchedMovieStatusMutation = async (movieId: number) => {
     return await mutation({
-      variables: {
-        movieId,
-        status,
-      },
+      variables: { movieId },
     });
   };
 

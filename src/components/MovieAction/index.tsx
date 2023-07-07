@@ -6,9 +6,8 @@ import StarIcon from "@mui/icons-material/Star";
 import TooltipIconButton from "@components/TooltipIconButton";
 import { IMovieActionProps } from "./types";
 import { useLocation } from "react-router-dom";
-import { useCreateFavoriteMovieMutation } from "@api/graphql/hooks/mutations/useCreateFavoriteMovieMutation";
-import { useDeleteFavoriteMovieMutation } from "@api/graphql/hooks/mutations/useDeleteFavoriteMovieMutation";
 import { useUpdateWatchedMovieStatusMutation } from "@api/graphql/hooks/mutations/useUpdateWatchedMovieStatusMutation";
+import { useUpdateFavoriteMovieMutation } from "@api/graphql/hooks/mutations/useUpdateFavoriteMovieMutation";
 
 const MovieAction = memo(({ movie }: IMovieActionProps) => {
   const { t } = useTranslation("common", {
@@ -21,21 +20,14 @@ const MovieAction = memo(({ movie }: IMovieActionProps) => {
   );
   const [isWatched, setIsWatched] = useState(movie.isWatched);
 
-  const { createFavoriteMovieMutation } = useCreateFavoriteMovieMutation();
-  const { deleteFavoriteMovieMutation } = useDeleteFavoriteMovieMutation();
+  const { updateFavoriteMovieMutation } = useUpdateFavoriteMovieMutation();
   const { updateWatchedMovieStatusMutation } =
     useUpdateWatchedMovieStatusMutation();
 
-  const updateFavoriteMovie = async () => {
+  const toggleFavoriteMovie = async () => {
     try {
-      if (isFavorite) {
-        await deleteFavoriteMovieMutation(movie.id);
-        setIsFavorite(false);
-        return;
-      }
-
-      await createFavoriteMovieMutation(movie.id);
-      setIsFavorite(true);
+      await updateFavoriteMovieMutation(movie.id);
+      setIsFavorite(!isFavorite);
     } catch (error) {
       console.error(error);
     }
@@ -43,7 +35,7 @@ const MovieAction = memo(({ movie }: IMovieActionProps) => {
 
   const updateWatchedFavoriteMovie = async () => {
     try {
-      await updateWatchedMovieStatusMutation(movie.id, !isWatched);
+      await updateWatchedMovieStatusMutation(movie.id);
       setIsWatched(!isWatched);
     } catch (error) {
       console.error(error);
@@ -63,7 +55,7 @@ const MovieAction = memo(({ movie }: IMovieActionProps) => {
       )}
       <TooltipIconButton
         title={isFavorite ? t("removeFavorite") : t("addFavorite")}
-        onClick={updateFavoriteMovie}
+        onClick={toggleFavoriteMovie}
       >
         {isFavorite ? <ClearIcon /> : <StarIcon color="primary" />}
       </TooltipIconButton>

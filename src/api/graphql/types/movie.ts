@@ -16,11 +16,6 @@ export interface IMoviePaginateResponse {
   totalResults: number;
 }
 
-export interface ICreateFavoriteMovieResponse {
-  isFavorite: boolean;
-  isWatched: boolean;
-}
-
 export interface IFavoriteMovieListQueryData {
   getFavoriteMovieList: IMoviePaginateResponse;
 }
@@ -31,35 +26,20 @@ export interface IFavoriteMovieListQueryVariables {
   language?: string;
 }
 
-export interface ICreateFavoriteMovieMutationResponseData {
+export interface IUpdateFavoriteMovieMutationResponseData {
   createFavoriteMovie: IMovieData;
 }
 
-export interface ICreateFavoriteMovieMutationVariables {
+export interface IUpdateFavoriteMovieMutationVariables {
   movieId: number;
   language: string;
 }
 
-export interface IUseCreateFavoriteMovieMutationResult
-  extends MutationResult<ICreateFavoriteMovieMutationResponseData> {
-  createFavoriteMovieMutation: (
+export interface IUseUpdateFavoriteMovieMutationResult
+  extends MutationResult<IUpdateFavoriteMovieMutationResponseData> {
+  updateFavoriteMovieMutation: (
     movieId: number
-  ) => Promise<FetchResult<ICreateFavoriteMovieMutationResponseData>>;
-}
-
-export interface IDeleteFavoriteMovieMutationResponseData {
-  deleteFavoriteMovie: number;
-}
-
-export interface IDeleteFavoriteMovieMutationVariables {
-  movieId: number;
-}
-
-export interface IUseDeleteFavoriteMovieMutationResult
-  extends MutationResult<IDeleteFavoriteMovieMutationResponseData> {
-  deleteFavoriteMovieMutation: (
-    movieId: number
-  ) => Promise<FetchResult<IDeleteFavoriteMovieMutationResponseData>>;
+  ) => Promise<FetchResult<IUpdateFavoriteMovieMutationResponseData>>;
 }
 
 export interface IUpdatedMovieViewingStatusData {
@@ -73,14 +53,12 @@ export interface IUpdateWatchedMovieStatusMutationResponseData {
 
 export interface IUpdateWatchedMovieStatusMutationVariables {
   movieId: number;
-  status: boolean;
 }
 
 export interface IUseUpdateWatchedMovieStatusMutationResult
   extends MutationResult<IUpdateWatchedMovieStatusMutationResponseData> {
   updateWatchedMovieStatusMutation: (
-    movieId: number,
-    status: boolean
+    movieId: number
   ) => Promise<FetchResult<IUpdateWatchedMovieStatusMutationResponseData>>;
 }
 
