@@ -6,6 +6,7 @@ import ChangeLanguageButton from "@components/ChangeLanguageButton";
 import { useTranslation } from "react-i18next";
 import { useGetProfile } from "@api/graphql/hooks/queries/useGetProfile";
 import { useLogoutMutation } from "@api/graphql/hooks/mutations/useLogoutMutation";
+import { client } from "@api/graphql/client";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ const NavBar = () => {
   const onLogoutClick = () => {
     logoutMutation();
     localStorage.removeItem("access_token");
+    client.resetStore();
     navigate("/");
   };
 
