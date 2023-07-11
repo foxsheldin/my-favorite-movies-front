@@ -10,9 +10,9 @@ import { selectFilterCurrentTypeView } from "@store/filter/selectors";
 import { PaginationWrapper } from "./styles";
 
 const MovieView = ({
-  movies,
-  currentPage,
-  totalPages,
+  movies = [],
+  currentPage = 0,
+  totalPages = 0,
   onPageChange,
 }: IMovieViewProps) => {
   const { t } = useTranslation();
@@ -22,7 +22,7 @@ const MovieView = ({
     onPageChange(page);
   };
 
-  if (!movies.length) {
+  if (!movies?.length) {
     return <Message text={t("error.data.noData")} />;
   }
 

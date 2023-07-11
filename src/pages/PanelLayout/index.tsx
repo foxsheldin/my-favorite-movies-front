@@ -5,7 +5,7 @@ import NavBar from "@components/NavBar";
 const PanelLayout = () => {
   const navigate = useNavigate();
   useEffect(() => {
-    if (!localStorage.getItem("DB_auth_user")) {
+    if (!localStorage.getItem("access_token")) {
       navigate("/");
     }
   }, [localStorage]);

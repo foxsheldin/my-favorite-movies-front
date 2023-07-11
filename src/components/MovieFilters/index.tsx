@@ -2,28 +2,33 @@ import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Paper, Typography } from "@mui/material";
 import GenreList from "@components/GenreList";
-import { selectGenreIsLoading } from "@store/genre/selectors";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
-import { fetchGenres } from "@store/genre/thunks";
 import { FormGroupWithColumns, WrappedContainer } from "./styles";
 import Preloader from "@components/Preloader";
 import SelectMovieYear from "@components/SelectMovieYear";
 import RangeMoviePopularity from "@components/RangeMoviePopularity";
 import { selectFilterSelectedMovieGenres } from "@store/filter/selectors";
 import { filterSlice } from "@store/filter";
+import { useGetGenreList } from "@api/graphql/hooks/queries/useGetGenreList";
+import { useGetFavoriteGenresList } from "@api/graphql/hooks/queries/useGetFavoriteGenresList";
 
 const MovieFilters = () => {
   const { t, i18n } = useTranslation(["common", "add-movie-page"]);
   const dispatch = useAppDispatch();
-
   const selectedGenres = useAppSelector(selectFilterSelectedMovieGenres);
-  const isGenreLoading = useAppSelector(selectGenreIsLoading);
+  const { genres, loading, refetch } = useGetGenreList();
+  const { favoriteGenresIds } = useGetFavoriteGenresList();
 
   useEffect(() => {
-    dispatch(fetchGenres());
+    refetch();
   }, [i18n.resolvedLanguage]);
 
-  if (isGenreLoading) {
+  useEffect(() => {
+    if (favoriteGenresIds?.length !== 0)
+      dispatch(filterSlice.actions.setSelectedMovieGenres(favoriteGenresIds));
+  }, [favoriteGenresIds]);
+
+  if (loading) {
     return (
       <Preloader
         message={t("loadingStatuses.genres", { ns: "add-movie-page" })}
@@ -42,6 +47,7 @@ const MovieFilters = () => {
           {t("filters.genres")}
         </Typography>
         <GenreList
+          genres={genres}
           selectedGenres={selectedGenres}
           onItemClick={(id) =>
             dispatch(filterSlice.actions.updateSelectedMovieGenres(id))

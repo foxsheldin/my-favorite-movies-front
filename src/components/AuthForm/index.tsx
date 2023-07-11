@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { GraphQLErrors } from "@apollo/client/errors";
 import { Field, Form } from "react-final-form";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -16,29 +17,32 @@ import {
   required,
   forbiddenСharacters,
 } from "./helpers";
+import { useSignInMutation } from "@api/graphql/hooks/mutations/useSignInMutation";
 
 const AuthForm = () => {
   const { t } = useTranslation();
 
-  const [authError, setAuthError] = useState<string | null>(null);
+  const [authError, setAuthError] = useState<GraphQLErrors | undefined>();
   const navigate = useNavigate();
+  const { signInMutation, loading, error } = useSignInMutation();
 
   useEffect(() => {
-    if (localStorage.getItem("DB_auth_user")) {
+    if (localStorage.getItem("access_token")) {
       navigate("/panel");
     }
   }, [localStorage]);
 
-  const onFormSubmit = (data: IAuthFormData) => {
-    setAuthError(null);
-    if (
-      localStorage.getItem("DB_user") === data.username &&
-      localStorage.getItem("DB_user_password") === data.password
-    ) {
-      localStorage.setItem("DB_auth_user", data.username);
+  const onFormSubmit = async (formData: IAuthFormData) => {
+    try {
+      setAuthError(undefined);
+      const response = await signInMutation(formData);
+      localStorage.setItem(
+        "access_token",
+        response.data?.signIn.access_token ?? ""
+      );
       navigate("/panel");
-    } else {
-      setAuthError(t("error.authorization.wrongLoginOrPassword"));
+    } catch {
+      setAuthError(error?.graphQLErrors);
     }
   };
 
@@ -47,14 +51,15 @@ const AuthForm = () => {
       onSubmit={onFormSubmit}
       render={({ handleSubmit }) => (
         <form onSubmit={handleSubmit}>
-          {authError && (
-            <CustomizedTypography variant="body1">
-              {authError}
-            </CustomizedTypography>
-          )}
+          {authError &&
+            authError.map((error) => (
+              <CustomizedTypography variant="body1">
+                {error.message}
+              </CustomizedTypography>
+            ))}
           <WrappedPaper>
             <Field<string>
-              name="username"
+              name="email"
               validate={composeValidators(
                 required,
                 minLength3,
@@ -63,6 +68,7 @@ const AuthForm = () => {
               render={({ input, meta }) => (
                 <TextFieldSizeWrapper
                   {...input}
+                  type="email"
                   label={t("authorization.login")}
                   error={meta.touched && !!meta.error}
                   helperText={meta.touched && meta.error}
@@ -82,7 +88,7 @@ const AuthForm = () => {
                 />
               )}
             />
-            <Button variant="contained" type="submit">
+            <Button variant="contained" type="submit" disabled={loading}>
               {t("authorization.signIn")}
             </Button>
           </WrappedPaper>
